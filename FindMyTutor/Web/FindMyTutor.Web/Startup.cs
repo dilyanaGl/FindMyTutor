@@ -21,6 +21,7 @@ using FindMyTutor.Data.Services.Recommendations;
 using FindMyTutor.Data.Services.Reviews;
 using FindMyTutor.Data.Services.Users;
 using FindMyTutor.Data.Services.Offers;
+using Microsoft.AspNetCore.Mvc.Razor;
 
 namespace FindMyTutor.Web
 {
@@ -47,16 +48,16 @@ namespace FindMyTutor.Web
                     options.UseSqlServer(
                         this.Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddDefaultIdentity<FindMyTutorUser>(
-                option =>
-                {
-                    option.Password.RequiredLength = 6;
-                    option.Password.RequireDigit = true;
-                    option.Password.RequireUppercase = true;
-                    option.Password.RequireNonAlphanumeric = false;
-                }
-                )
-                .AddEntityFrameworkStores<FindMyTutorWebContext>();
+            services.AddIdentity<FindMyTutorUser, IdentityRole>(option =>
+               {
+                   option.Password.RequiredLength = 6;
+                   option.Password.RequireDigit = true;
+                   option.Password.RequireUppercase = true;
+                   option.Password.RequireNonAlphanumeric = false;
+
+               })
+                .AddEntityFrameworkStores<FindMyTutorWebContext>()
+                .AddDefaultTokenProviders();
 
             services.AddScoped(typeof(IRepository<>), typeof(DbRepository<>));
             services.AddScoped<ISubjectService, SubjectService>();
@@ -65,6 +66,15 @@ namespace FindMyTutor.Web
             services.AddScoped<IMessageService, MessageService>();
             services.AddScoped<ICommentService, CommentService>();
             services.AddScoped<IUserService, UserService>();
+
+            services.Configure<RazorViewEngineOptions>(options =>
+            {
+                options.AreaViewLocationFormats.Clear();
+                options.AreaViewLocationFormats.Add("/Areas/Identity/Pages/Account/{0}.cshtml");
+                options.AreaViewLocationFormats.Add("/Areas/Identity/Pages/Account/Manage/{0}.cshtml");
+                options.AreaViewLocationFormats.Add("/Views/Shared/{0}.cshtml");
+                options.AreaViewLocationFormats.Add("/Views/{1}/{0}.cshtml");
+            });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
@@ -91,6 +101,9 @@ namespace FindMyTutor.Web
 
             app.UseMvc(routes =>
             {
+                routes.MapRoute(
+                    name: "Identity",
+                    template: "{area:exists}/Account/{controller=Home}/{action=Index}/{id?}");
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
