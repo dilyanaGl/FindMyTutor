@@ -59,6 +59,8 @@ namespace FindMyTutor.Data.Migrations
 
                     b.Property<bool>("EmailConfirmed");
 
+                    b.Property<string>("FullName");
+
                     b.Property<bool>("LockoutEnabled");
 
                     b.Property<DateTimeOffset?>("LockoutEnd");
@@ -138,15 +140,23 @@ namespace FindMyTutor.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Address");
+
+                    b.Property<string>("Description");
+
                     b.Property<DateTime>("ExpirationDate");
 
-                    b.Property<double>("Price");
+                    b.Property<string>("ImageUrl");
+
+                    b.Property<double?>("Price");
 
                     b.Property<DateTime>("PublishDate");
 
                     b.Property<int>("RatingsCount");
 
                     b.Property<int>("SubjectId");
+
+                    b.Property<string>("Title");
 
                     b.Property<int>("TotalRating");
 
@@ -166,6 +176,8 @@ namespace FindMyTutor.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Content");
 
                     b.Property<DateTime>("PublicationTime");
 

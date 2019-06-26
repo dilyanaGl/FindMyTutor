@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FindMyTutor.Web.ViewModels.Common;
 
 namespace FindMyTutor.Web.ViewModels.Home
 {

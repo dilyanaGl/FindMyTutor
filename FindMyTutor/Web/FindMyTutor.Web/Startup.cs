@@ -70,11 +70,13 @@ namespace FindMyTutor.Web
             services.Configure<RazorViewEngineOptions>(options =>
             {
                 options.AreaViewLocationFormats.Clear();
-                options.AreaViewLocationFormats.Add("/Areas/Identity/Pages/Account/{0}.cshtml");
+                options.AreaViewLocationFormats.Add("/Areas/Identity/Pages/Account/Views/{1}/{0}.cshtml");
                 options.AreaViewLocationFormats.Add("/Areas/Identity/Pages/Account/Manage/{0}.cshtml");
                 options.AreaViewLocationFormats.Add("/Views/Shared/{0}.cshtml");
                 options.AreaViewLocationFormats.Add("/Views/{1}/{0}.cshtml");
             });
+
+            services.AddRouting();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
@@ -103,7 +105,8 @@ namespace FindMyTutor.Web
             {
                 routes.MapRoute(
                     name: "Identity",
-                    template: "{area:exists}/Account/{controller=Home}/{action=Index}/{id?}");
+                    template: "{area:exists}/{controller=Account}/{action=Index}/{id?}");
+
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");

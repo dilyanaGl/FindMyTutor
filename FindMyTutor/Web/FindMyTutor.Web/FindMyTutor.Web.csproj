@@ -20,4 +20,8 @@
     <ProjectReference Include="..\..\Data\FindMyTutor.Data\FindMyTutor.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\User\" />
+  </ItemGroup>
+
 </Project>

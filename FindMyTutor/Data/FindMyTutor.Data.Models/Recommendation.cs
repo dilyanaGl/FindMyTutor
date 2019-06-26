@@ -29,5 +29,7 @@ namespace FindMyTutor.Data.Models
         public bool RecommendToAFriend { get; set; }
 
         public DateTime PublicationTime { get; set; }
+
+        public string Content { get; set; }
     }
 }

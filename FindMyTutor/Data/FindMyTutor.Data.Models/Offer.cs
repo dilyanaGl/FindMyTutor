@@ -27,13 +27,21 @@ namespace FindMyTutor.Data.Models
 
         public DateTime ExpirationDate { get; set; }
 
-        public double Price { get; set; }
+        public double? Price { get; set; }
 
         public ICollection<Message> Messages { get; set; }
 
         public int RatingsCount { get; set; }
 
         public int TotalRating { get; set; }
+
+        public string ImageUrl { get; set; }
+
+        public string Address { get; set; }
+
+        public string Title { get; set; }
+
+        public string Description { get; set; }
 
 
     }

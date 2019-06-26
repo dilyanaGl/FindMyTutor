@@ -25,6 +25,8 @@ namespace FindMyTutor.Data.Models
 
         public Role Role { get; set; }
 
+        public string FullName { get; set; }
+
         public ICollection<Recommendation> GivenRecommendations { get; set; }
 
         public ICollection<Recommendation> ReceivedRecommendations { get; set; }
