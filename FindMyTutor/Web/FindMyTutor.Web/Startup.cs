@@ -48,6 +48,8 @@ namespace FindMyTutor.Web
                     options.UseSqlServer(
                         this.Configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
             services.AddIdentity<FindMyTutorUser, IdentityRole>(option =>
                {
                    option.Password.RequiredLength = 6;
