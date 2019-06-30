@@ -22,6 +22,7 @@ using FindMyTutor.Data.Services.Reviews;
 using FindMyTutor.Data.Services.Users;
 using FindMyTutor.Data.Services.Offers;
 using Microsoft.AspNetCore.Mvc.Razor;
+using AutoMapper;
 
 namespace FindMyTutor.Web
 {
@@ -79,6 +80,8 @@ namespace FindMyTutor.Web
             });
 
             services.AddRouting();
+
+           services.AddAutoMapper();
 
             services.AddMvc(options =>
             {
