@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using FindMyTutor.Data.Services.Subjects;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FindMyTutor.Web.Controllers
 {
@@ -22,7 +23,7 @@ namespace FindMyTutor.Web.Controllers
         ////}
         ///
         [Route("/loadLevels/{id}")]
-        public IEnumerable<string> GetLevels(int id)
+        public IEnumerable<SelectListItem> GetLevels(int id)
         {
             var subjects = this.subjectService.GetLevels(id);
             return subjects;            

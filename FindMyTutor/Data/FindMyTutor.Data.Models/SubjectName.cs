@@ -19,6 +19,8 @@ namespace FindMyTutor.Data.Models
 
         public string Level { get; set; }
 
+        public string LevelEnglish { get; set; }
+
         public Subject Subject { get; set; }
 
         public ICollection<Offer> Offers { get; set; }

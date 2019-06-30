@@ -6,6 +6,7 @@ using FindMyTutor.Common;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using FindMyTutor.Data.Services.DTO;
+using System.Threading.Tasks;
 
 namespace FindMyTutor.Data.Services.Offers
 {
@@ -18,9 +19,27 @@ namespace FindMyTutor.Data.Services.Offers
             this.offers = offers;
         }
 
-        public void AddOffer(OfferDTO offer)
+        public async Task<int> AddOffer(OfferDTO model)
         {
-            throw new NotImplementedException();
+            var offer = new Offer
+            {
+                Title = model.Title,
+                Description = model.Description,
+                TutorId = model.TutorId,
+                PublishDate = DateTime.Now,
+                ExpirationDate = model.ExpirationDate,
+                Price = model.Price,
+                ImageUrl = model.ImageUrl,
+                SubjectId = model.SubjectId,
+                Address = model.Address
+                
+            };
+
+            await this.offers.Add(offer);           
+            
+           var result = await this.offers.SaveChangesAsync();
+
+            return offer.Id;
         }
 
         public Offer GetOfferDetails(int id)
@@ -35,9 +54,15 @@ namespace FindMyTutor.Data.Services.Offers
                 .Where(p => p.Subject.Name == subject);
         }
 
-        public void RemoveOffer(int id)
+        public Task<int> RemoveOffer(int id)
         {
-            throw new NotImplementedException();
+            var offer = this.offers
+                .All()
+                .Where(p => p.Id == id)
+                .FirstOrDefault();
+
+            this.offers.Remove(offer);
+            return this.offers.SaveChangesAsync();
         }
     }
 }

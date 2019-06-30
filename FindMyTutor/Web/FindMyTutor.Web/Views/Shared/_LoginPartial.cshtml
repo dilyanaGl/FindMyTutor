@@ -13,8 +13,7 @@
                 <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Здравей, @UserManager.GetUserName(User)!</a>
             </li>
             <li>
-                <button type="submit" class="btn btn-link navbar-btn navbar-link"
-                 asp-controller="Offer" asp-action="Create">Добави оферта</button>
+                <a asp-controller="Offer" asp-action="Create">Добави оферта</a>
             </li>
             <li>
                 <button type="submit" class="btn btn-link navbar-btn navbar-link">Изход</button>

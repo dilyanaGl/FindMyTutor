@@ -21,9 +21,9 @@ namespace FindMyTutor.Data
             
         }
 
-        public Task Add(TEntity entity)
+        public async Task Add(TEntity entity)
         {
-           return this.dbSet.AddAsync(entity);
+            await this.dbSet.AddAsync(entity);           
             
         }
 

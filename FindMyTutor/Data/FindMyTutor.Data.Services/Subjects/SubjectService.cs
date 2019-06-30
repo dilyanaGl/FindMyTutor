@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Text;
 using FindMyTutor.Common;
 using FindMyTutor.Data.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using FindMyTutor.Data.Services.Helpers;
 
 namespace FindMyTutor.Data.Services.Subjects
 {
@@ -18,12 +20,39 @@ namespace FindMyTutor.Data.Services.Subjects
             this.subjectNames = subjectNames;
         }
 
-        public IEnumerable<string> GetLevels(int subjectId)
+        public IEnumerable<SelectListItem> GetLevels(int subjectId)
+        {
+            var subjectNames = this.subjectNames.All()
+                .Where(p => p.SubjectId == subjectId)
+                .Select(p => new SelectListItem {
+                    Text = p.Level,
+                    Value = p.LevelEnglish
+                })                
+                .ToArray();
+
+            return new HashSet<SelectListItem>(subjectNames, new LevelsComparer());
+        }
+
+        public string GetSubjectById(int id)
+        {
+            return this.subjects.All().FirstOrDefault(p => p.Id == id).Name;
+        }
+
+        public SubjectName GetSubjectNameById(int id)
+        {
+            return this.subjectNames.All().FirstOrDefault(p => p.Id == id);
+        }
+
+        public IEnumerable<SelectListItem> GetSubjectNames(int subjectId, string level)
         {
             return this.subjectNames.All()
-                .Where(p => p.SubjectId == subjectId)
-                .Select(p => p.Level)                
-                .ToHashSet();
+                .Where(p => p.SubjectId == subjectId && p.LevelEnglish == level)
+                .Select(p => new SelectListItem
+                {
+                    Text = p.Name,
+                    Value = p.Id.ToString()
+                })
+                .ToArray();
         }
 
         public IEnumerable<Subject> GetSubjects()
@@ -32,5 +61,7 @@ namespace FindMyTutor.Data.Services.Subjects
                 .All()
                 .ToArray();
         }
+
+
     }
 }

@@ -250,6 +250,8 @@ namespace FindMyTutor.Data.Migrations
 
                     b.Property<string>("Level");
 
+                    b.Property<string>("LevelEnglish");
+
                     b.Property<string>("Name");
 
                     b.Property<int>("SubjectId");

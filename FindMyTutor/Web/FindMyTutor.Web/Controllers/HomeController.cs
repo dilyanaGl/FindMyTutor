@@ -9,6 +9,7 @@ using FindMyTutor.Web.ViewModels.Common;
 using FindMyTutor.Web.ViewModels;
 using FindMyTutor.Data.Services.Subjects;
 using FindMyTutor.Web.Helpers;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FindMyTutor.Web.Controllers
 {
@@ -66,9 +67,18 @@ namespace FindMyTutor.Web.Controllers
         }
 
         [Route("/loadLevels/")]
-        public IEnumerable<string> GetLevels(int id)
+        public IEnumerable<SelectListItem> GetLevels(int id)
         {
-            return this.subjectService.GetLevels(id);
+            return this.subjectService
+                .GetLevels(id);
+        }
+
+        [Route("/loadSubjectNames/{subjectId}/{levelName}")]
+        [HttpGet]
+        public IEnumerable<SelectListItem> LoadSubjectNames(int subjectId, string levelName)
+        {
+            return this.subjectService.GetSubjectNames(subjectId, levelName);
+
         }
 
 

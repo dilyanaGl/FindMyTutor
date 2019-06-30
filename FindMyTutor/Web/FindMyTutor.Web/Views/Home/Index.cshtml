@@ -37,10 +37,11 @@
                         
                         $("#levels").empty();
                         for (let name of result) {
-                            let element = $("<input>").attr({ type: "radio", id: name });
-                            debugger;
-                            let label = $("<label>").attr({ for: name });
-                            label.text(name);                            
+                            
+                            console.log(name);
+                            let element = $("<input>").attr({ type: "radio", id: name.value });
+                            let label = $("<label>").attr({ for: name.text });
+                            label.text(name.text);                            
                             
                             $("#levels").append(element);
                             $("#levels").append(label);

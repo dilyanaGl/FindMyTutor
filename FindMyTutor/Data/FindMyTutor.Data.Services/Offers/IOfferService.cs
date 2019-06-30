@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using FindMyTutor.Data.Models;
+using System.Threading.Tasks;
 
 namespace FindMyTutor.Data.Services.Offers
 {
@@ -13,9 +14,9 @@ namespace FindMyTutor.Data.Services.Offers
 
         Offer GetOfferDetails(int id);
 
-        void AddOffer(OfferDTO offer);
+        Task<int> AddOffer(OfferDTO offer);
 
-        void RemoveOffer(int id);
+        Task<int> RemoveOffer(int id);
 
 
 
