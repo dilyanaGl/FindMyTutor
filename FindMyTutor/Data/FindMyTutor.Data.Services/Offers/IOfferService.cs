@@ -4,6 +4,7 @@ using System.Text;
 using FindMyTutor.Data.Models;
 using System.Threading.Tasks;
 
+
 namespace FindMyTutor.Data.Services.Offers
 {
     using DTO;
@@ -18,7 +19,10 @@ namespace FindMyTutor.Data.Services.Offers
 
         Task<int> RemoveOffer(int id);
 
+        Task<int> EditOffer(EditOfferDTO offer);
 
+        IEnumerable<Offer> GetOfferBySubjectNameId(int subjectNameId);
+       
 
     }
 }

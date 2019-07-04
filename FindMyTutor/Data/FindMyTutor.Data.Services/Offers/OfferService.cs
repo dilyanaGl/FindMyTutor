@@ -42,6 +42,35 @@ namespace FindMyTutor.Data.Services.Offers
             return offer.Id;
         }
 
+        public async Task<int> EditOffer(EditOfferDTO edit)
+        {
+            var offer = this.offers.All().FirstOrDefault(p => p.Id == edit.Id);
+
+            offer.ImageUrl = edit.ImageUrl;
+            if(edit.Price != null)
+            {
+                offer.Price = edit.Price;
+            }
+
+
+            offer.Address = edit.Address;
+            offer.Description = edit.Description;
+            offer.SubjectId = edit.SubjectNameId;
+            offer.Title = edit.Title;
+
+
+            return await this.offers.SaveChangesAsync();
+
+        }
+
+        public IEnumerable<Offer> GetOfferBySubjectNameId(int subjectNameId)
+        {
+            return this.offers
+                .All()
+                .Where(p => p.SubjectId == subjectNameId)
+                .ToArray();
+        }
+
         public Offer GetOfferDetails(int id)
         {
             return this.offers.All()

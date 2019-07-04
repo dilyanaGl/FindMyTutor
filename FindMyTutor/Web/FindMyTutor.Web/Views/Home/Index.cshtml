@@ -5,56 +5,79 @@
         ViewData["Title"] = "Home Page";
     }
 <body class="container">
-   
-    <br/>
-    @{ int index = 0;}
-    @{ int totalLength = FindMyTutor.Web.Helpers.Constants.ButtonStyles.Length;}
-    @foreach (var subject in Model.Subjects)
-    {
-        int currentIndex = index % totalLength;
-        string currentStyle = FindMyTutor.Web.Helpers.Constants.ButtonStyles[currentIndex];
-        @await Html.PartialAsync("_CreateButton", new CreateSubjectButtonModel { Subject = subject, ButtonStyle = currentStyle });
-            
+
+    <br />
+    <div id="allSubjects">
+
+        @{ int index = 0;}
+        @{ int totalLength = FindMyTutor.Web.Helpers.Constants.ButtonStyles.Length;}
+        @foreach (var subject in Model.Subjects)
+        {
+            int currentIndex = index % totalLength;
+            string currentStyle = FindMyTutor.Web.Helpers.Constants.ButtonStyles[currentIndex];
+            @await Html.PartialAsync("_CreateButton", new CreateSubjectButtonModel { Subject = subject, ButtonStyle = currentStyle });
+
             index++;
+        }
+
+    </div>  
+     
+
+    <div >
+        <select id="levels" style="display:none">
+            
+        </select>
+        <br/>
+    </div>
+    <div id="subjectDiv">
+        <h4 id="subjectMessage" class="warning" style="display:none">В момента няма такива оферти</h4>
+        <select id="subjects" style="display:none">            
+        </select>
+        <br/>
+    </div>
+
+    <div id="offers"></div>
 
 
-    }
-
-    <div id="levels"></div>
-        
 </body>
     @section Scripts {
         @{await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
         <script>
 
             function loadLevels(id) {
-                
+
+                $('#subjects').hide();
+                $('#subjectMessage').hide();
+                $('p').removeClass('currentlySelected');
+                $('#' + id).addClass('currentlySelected');
                 let url = "/loadLevels/" + id;
                 $.get({
                     type: 'GET',
                     url: url,                    
-                    success: function(result) {
-                        
+                    success: function (result) {
+                        $('#levels').show();
                         $("#levels").empty();
+                        $('#levels').append('<option label="Изберете ниво" value="0"></option>');
                         for (let name of result) {
                             
                             console.log(name);
-                            let element = $("<input>").attr({ type: "radio", id: name.value });
-                            let label = $("<label>").attr({ for: name.text });
-                            label.text(name.text);                            
+                            let element = $(`<option label="${name.text}"
+                                  value="${name.value}" onselect="loadSubjectNames(${name.value})"></option>`);
+                            //let label = $("<label>").attr({ for: name.text });
+                            //label.text(name.text);                            
                             
+
                             $("#levels").append(element);
-                            $("#levels").append(label);
+                            //$("#levels").append(label);
                             $("#levels").append("<br>");
                         }
                     }
                 })
             }
 
-
-
             function loadSubjects() {
 
+                
                 $.ajax({
                     type: 'GET',
                     url: '/getSubjects',
@@ -70,6 +93,87 @@
 
             }
 
+            $('#levels').change(loadSubjectNames);
+
+            function loadSubjectNames() {
+                                
+                $('#subjects').empty();
+                
+                let name = $('option:selected').val();
+                console.log(name);
+                let subjectId = $($('.currentlySelected')[0]).attr('id');
+                console.log(subjectId);
+
+
+                let url = `/loadSubjectNames/${subjectId}/${name}`;
+                
+                
+                $.get({
+                    type: 'GET',
+                    url: url,
+                    success: function (result) {
+                        console.log(url);
+                        console.log(result);
+                        if (result.length == 0) {
+                            $('#subjectMessage').show();
+                        } else {
+
+                            $('#subjects').show();
+                            $('#subjects').append(`<option label="Изберете предмет"
+                                  value="0"></option>`);
+                            for (let name of result) {
+
+                                let element = $(`<option label="${name.text}"
+                                  value="${name.value}"></option>`);
+                                //  console.log(element);
+                                //  console.log(element);                      
+
+
+                                $("#subjects").append(element);
+                                //  element.change(loadSubjectNames(name));                    
+
+                            }
+                        }
+                       
+                    }
+                })
+            }       
+
+            $('#subjects').change(loadOffers)
+            function loadOffers() {
+
+                let id = $('#subjects option:selected').val();
+                let url = '/getOffersWithSubjectId/' + id; 
+                $.get({
+                    type: 'GET',
+                    url: url,
+                    success: function (result) {
+                        console.log(url);
+                        console.log(result);
+                        if (result.length == 0) {
+                            $('#subjectMessage').show();
+                        } else {
+
+                            $('#offers').show();
+                            
+                                  
+                            for (let name of result) {
+
+                                let element = $(`<a class='button' href='/Offer/Details/${name.id}'
+                                          >${name.title}</a>`);
+                                //  console.log(element);
+                                //  console.log(element);                      
+
+
+                                $("#offers").append(element);
+                                //  element.change(loadSubjectNames(name));                    
+
+                            }
+                        }
+
+                    }
+                })
+            }
 
         </script>
 

@@ -45,9 +45,9 @@ namespace FindMyTutor.Data
             
         }
 
-        public Task<int> SaveChangesAsync()
+        public async Task<int> SaveChangesAsync()
         {
-            return this.context.SaveChangesAsync();
+            return await this.context.SaveChangesAsync();
         }
 
         

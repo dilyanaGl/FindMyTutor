@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FindMyTutor.Web.ViewModels
+namespace FindMyTutor.Web.ViewModels.Offers
 {
     public class OfferViewModel
     {

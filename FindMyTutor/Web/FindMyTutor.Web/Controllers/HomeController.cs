@@ -10,32 +10,43 @@ using FindMyTutor.Web.ViewModels;
 using FindMyTutor.Data.Services.Subjects;
 using FindMyTutor.Web.Helpers;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using FindMyTutor.Web.ViewModels.HomeView;
+using FindMyTutor.Data.Services.Offers;
+using AutoMapper;
+using FindMyTutor.Data.Models;
 
 namespace FindMyTutor.Web.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ISubjectService subjectService;
+        private readonly IOfferService offerService;
+        private readonly IMapper mapper;
 
-        public HomeController(ISubjectService subjectService)
+        public HomeController(ISubjectService subjectService,
+            IOfferService offerService,
+            IMapper mapper)
         {
             this.subjectService = subjectService;
+            this.offerService = offerService;
+            this.mapper = mapper;
         }
 
         public IActionResult Index()
         {
             var subjects = this.subjectService.GetSubjects()
-                .Select(p => new SubjectViewModel {
+                .Select(p => new SubjectViewModel
+                {
                     SubjectId = p.Id,
                     SubjectName = p.Name
                 });
-           // var levels = this.subjectService.GetLevels();
+            // var levels = this.subjectService.GetLevels();
             var buttonStyles = Constants.ButtonStyles;
 
             var model = new HomeViewModel
             {
-                Subjects = subjects               
-                
+                Subjects = subjects
+
             };
 
             return View(model);
@@ -77,9 +88,24 @@ namespace FindMyTutor.Web.Controllers
         [HttpGet]
         public IEnumerable<SelectListItem> LoadSubjectNames(int subjectId, string levelName)
         {
-            return this.subjectService.GetSubjectNames(subjectId, levelName);
+            return this.subjectService.LoadOfferBasedOnSubjectAndLevel(subjectId, levelName);
 
         }
+
+        [Route("/getOffersWithSubjectId/{id}")]
+        [HttpGet]
+        public IEnumerable<OfferIndexViewModel> LoadOffersBySubjectNameId(int id)
+        {
+
+            return this.offerService
+                .GetOfferBySubjectNameId(id)
+                .Select(p => mapper.Map<Offer, OfferIndexViewModel>(p))
+                .ToArray();
+
+        }
+
+
+
 
 
     }
