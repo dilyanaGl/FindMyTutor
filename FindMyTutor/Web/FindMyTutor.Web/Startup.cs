@@ -23,6 +23,8 @@ using FindMyTutor.Data.Services.Users;
 using FindMyTutor.Data.Services.Offers;
 using Microsoft.AspNetCore.Mvc.Razor;
 using AutoMapper;
+using FindMyTutor.Web.ViewModels.Offers.Profiles;
+using FindMyTutor.Web.ViewModels.Comments.Profiles;
 
 namespace FindMyTutor.Web
 {
@@ -57,10 +59,13 @@ namespace FindMyTutor.Web
                    option.Password.RequireDigit = true;
                    option.Password.RequireUppercase = true;
                    option.Password.RequireNonAlphanumeric = false;
+                   
 
                })
                 .AddEntityFrameworkStores<FindMyTutorWebContext>()
                 .AddDefaultTokenProviders();
+
+            services.AddAuthorization();
 
             services.AddScoped(typeof(IRepository<>), typeof(DbRepository<>));
             services.AddScoped<ISubjectService, SubjectService>();
@@ -80,8 +85,14 @@ namespace FindMyTutor.Web
             });
 
             services.AddRouting();
+            var mapperConfig = new MapperConfiguration(mc =>
+           {
+               mc.AddProfile<OfferProfile>();
+               mc.AddProfile<CommentProfile>();
+           });
 
-           services.AddAutoMapper();
+            IMapper mapper = mapperConfig.CreateMapper();
+            services.AddSingleton(mapper);
 
             services.AddMvc(options =>
             {

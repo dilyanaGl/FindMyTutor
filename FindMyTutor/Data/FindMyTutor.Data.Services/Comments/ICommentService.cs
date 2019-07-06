@@ -6,6 +6,7 @@ using FindMyTutor.Data.Models;
 namespace FindMyTutor.Data.Services.Comments
 {
     using DTO;
+    using System.Threading.Tasks;
 
     public interface ICommentService
     {
@@ -13,7 +14,7 @@ namespace FindMyTutor.Data.Services.Comments
 
         void RemoveComment(int commentId);
 
-        void AddComment(CommentDTO commentDTO);
+        Task<int> AddComment(CommentDTO commentDTO);
 
 
 

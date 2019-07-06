@@ -4,6 +4,12 @@
     @{
         ViewData["Title"] = "Home Page";
     }
+
+@if (TempData.ContainsKey("InvalidOffer") && (bool)TempData.Peek("InvalidOffer"))
+{
+    await Html.RenderPartialAsync("Partial/_InvalidView.cshtml");
+    TempData["InvalidOffer"] = false;
+}
 <body class="container">
 
     <br />
@@ -21,19 +27,19 @@
         }
 
     </div>  
-     
+     <br/>
 
     <div >
-        <select id="levels" style="display:none">
-            
+        <select id="levels" style="display:none">           
         </select>
         <br/>
     </div>
+    <br/>
     <div id="subjectDiv">
+
+        <select id="subjects" style="display:none"></select>
         <h4 id="subjectMessage" class="warning" style="display:none">В момента няма такива оферти</h4>
-        <select id="subjects" style="display:none">            
-        </select>
-        <br/>
+        <br />
     </div>
 
     <div id="offers"></div>
@@ -48,6 +54,7 @@
 
                 $('#subjects').hide();
                 $('#subjectMessage').hide();
+                $('#offers').hide();
                 $('p').removeClass('currentlySelected');
                 $('#' + id).addClass('currentlySelected');
                 let url = "/loadLevels/" + id;
@@ -159,8 +166,7 @@
                                   
                             for (let name of result) {
 
-                                let element = $(`<a class='button' href='/Offer/Details/${name.id}'
-                                          >${name.title}</a>`);
+                                let element = $(`<a class="btn btn-outline-success btn-lg" href="/Offer/Details/${name.id}">${name.title}</a>`);
                                 //  console.log(element);
                                 //  console.log(element);                      
 
