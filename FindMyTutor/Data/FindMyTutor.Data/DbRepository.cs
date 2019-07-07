@@ -8,33 +8,39 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FindMyTutor.Data
 {
-    public class DbRepository<TEntity> : IDisposable, IRepository<TEntity> 
+    public class DbRepository<TEntity> : IDisposable, IRepository<TEntity>
         where TEntity : class
     {
         private readonly FindMyTutorWebContext context;
         private readonly DbSet<TEntity> dbSet;
+        private bool isDisposed;
 
         public DbRepository(FindMyTutorWebContext context)
         {
             this.context = context;
             this.dbSet = this.context.Set<TEntity>();
-            
+            this.isDisposed = false;
+
         }
 
         public async Task Add(TEntity entity)
         {
-            await this.dbSet.AddAsync(entity);           
+            await this.dbSet.AddAsync(entity);
+
             
+
         }
 
         public IQueryable<TEntity> All()
         {
-            return this.dbSet;
+            return this.dbSet.AsNoTracking();
         }
 
         public void Dispose()
         {
-            context.Dispose();
+            this.context.Dispose();
+          
+
         }
 
 
@@ -42,14 +48,14 @@ namespace FindMyTutor.Data
         public void Remove(TEntity entity)
         {
             this.dbSet.Remove(entity);
-            
+
         }
 
-        public async Task<int> SaveChangesAsync()
+        public Task<int> SaveChangesAsync()
         {
-            return await this.context.SaveChangesAsync();
+            return this.context.SaveChangesAsync();
         }
 
-        
+
     }
 }

@@ -7,12 +7,14 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using FindMyTutor.Data.Services.DTO;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Identity;
 
 namespace FindMyTutor.Data.Services.Offers
 {
     public class OfferService : IOfferService
     {
         private readonly IRepository<Offer> offers;
+       
 
         public OfferService(IRepository<Offer> offers)
         {
@@ -35,11 +37,12 @@ namespace FindMyTutor.Data.Services.Offers
                 
             };
 
-            await this.offers.Add(offer);           
-            
-           var result = await this.offers.SaveChangesAsync();
+            await this.offers.Add(offer);
+
+            await this.offers.SaveChangesAsync();
 
             return offer.Id;
+                  
         }
 
         public async Task<int> EditOffer(EditOfferDTO edit)
@@ -93,5 +96,7 @@ namespace FindMyTutor.Data.Services.Offers
             this.offers.Remove(offer);
             return this.offers.SaveChangesAsync();
         }
+
+        
     }
 }

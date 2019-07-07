@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 namespace FindMyTutor.Common
 {
-    public interface IRepository<TEntity>
+    public interface IRepository<TEntity> : IDisposable
         where TEntity : class
     {
         IQueryable<TEntity> All();
