@@ -103,6 +103,29 @@ namespace FindMyTutor.Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("FindMyTutor.Data.Models.Log", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("DateTime");
+
+                    b.Property<int>("LogType");
+
+                    b.Property<int>("ResourceId");
+
+                    b.Property<int>("ResourceType");
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Log");
+                });
+
             modelBuilder.Entity("FindMyTutor.Data.Models.Message", b =>
                 {
                     b.Property<int>("Id")
@@ -132,6 +155,27 @@ namespace FindMyTutor.Data.Migrations
                     b.HasIndex("SenderId");
 
                     b.ToTable("Messages");
+                });
+
+            modelBuilder.Entity("FindMyTutor.Data.Models.Notification", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("IsSeen");
+
+                    b.Property<int>("MessageType");
+
+                    b.Property<string>("NotificationRecipientId");
+
+                    b.Property<int?>("ResourceId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NotificationRecipientId");
+
+                    b.ToTable("Notifications");
                 });
 
             modelBuilder.Entity("FindMyTutor.Data.Models.Offer", b =>
@@ -198,6 +242,31 @@ namespace FindMyTutor.Data.Migrations
                     b.HasIndex("RecommenderId");
 
                     b.ToTable("Recommendations");
+                });
+
+            modelBuilder.Entity("FindMyTutor.Data.Models.Report", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Rationale");
+
+                    b.Property<string>("ReporterId");
+
+                    b.Property<string>("ResourceCreatorId");
+
+                    b.Property<int>("ResourceId");
+
+                    b.Property<int>("ResourceType");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ReporterId");
+
+                    b.HasIndex("ResourceCreatorId");
+
+                    b.ToTable("Reports");
                 });
 
             modelBuilder.Entity("FindMyTutor.Data.Models.Review", b =>
@@ -386,6 +455,14 @@ namespace FindMyTutor.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("FindMyTutor.Data.Models.Log", b =>
+                {
+                    b.HasOne("FindMyTutor.Data.Models.FindMyTutorUser", "User")
+                        .WithMany("Logs")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
             modelBuilder.Entity("FindMyTutor.Data.Models.Message", b =>
                 {
                     b.HasOne("FindMyTutor.Data.Models.Offer", "Offer")
@@ -400,6 +477,14 @@ namespace FindMyTutor.Data.Migrations
                     b.HasOne("FindMyTutor.Data.Models.FindMyTutorUser", "Sender")
                         .WithMany("SentMessages")
                         .HasForeignKey("SenderId")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("FindMyTutor.Data.Models.Notification", b =>
+                {
+                    b.HasOne("FindMyTutor.Data.Models.FindMyTutorUser", "NotificationRecipient")
+                        .WithMany("Notifications")
+                        .HasForeignKey("NotificationRecipientId")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
@@ -431,6 +516,19 @@ namespace FindMyTutor.Data.Migrations
                     b.HasOne("FindMyTutor.Data.Models.FindMyTutorUser", "Recommender")
                         .WithMany("GivenRecommendations")
                         .HasForeignKey("RecommenderId")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("FindMyTutor.Data.Models.Report", b =>
+                {
+                    b.HasOne("FindMyTutor.Data.Models.FindMyTutorUser", "Reporter")
+                        .WithMany("ReportsMade")
+                        .HasForeignKey("ReporterId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("FindMyTutor.Data.Models.FindMyTutorUser", "ResourceCreator")
+                        .WithMany("ReportsReceived")
+                        .HasForeignKey("ResourceCreatorId")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 

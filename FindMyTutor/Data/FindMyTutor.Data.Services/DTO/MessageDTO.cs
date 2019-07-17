@@ -15,5 +15,7 @@ namespace FindMyTutor.Data.Services.DTO
         public string SenderId { get; set; }
 
         public string ReceiverId { get; set; }
+
+        public int? OfferId { get; set; }
     }
 }

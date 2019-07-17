@@ -3,4 +3,4 @@
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
 
-<p id="@Model.Subject.SubjectId"><button type="button" onClick="loadLevels(@Model.Subject.SubjectId)" class="@Model.ButtonStyle btn-lg">@Model.Subject.SubjectName</button></p>
+<li class="nav-item" id="@Model.Subject.SubjectId"><a class="navbar-link" onClick="loadLevels(@Model.Subject.SubjectId)">@Html.Raw(Model.Subject.SubjectName)</a></li>

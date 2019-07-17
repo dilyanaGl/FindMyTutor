@@ -18,6 +18,10 @@ namespace FindMyTutor.Data
         public DbSet<Recommendation> Recommendations { get; set; }
         public DbSet<Offer> Offers { get; set; }
         public DbSet<SubjectName> SubjectNames { get; set; }
+        public DbSet<Report> Reports { get; set; }
+      
+        public DbSet<Notification> Notifications { get; set; }
+               
 
         public FindMyTutorWebContext(DbContextOptions<FindMyTutorWebContext> options)
             : base(options)
@@ -93,15 +97,39 @@ namespace FindMyTutor.Data
                 .HasOne(p => p.Subject)
                 .WithMany(p => p.Offers)
                 .HasForeignKey(p => p.SubjectId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-  
+                .OnDelete(DeleteBehavior.Restrict);  
 
             builder.Entity<SubjectName>()
                 .HasOne(p => p.Subject)
                 .WithMany(p => p.SubCategories)
                 .HasForeignKey(p => p.SubjectId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Report>()
+                .HasOne(p => p.ResourceCreator)
+                .WithMany(p => p.ReportsReceived)
+                .HasForeignKey(p => p.ResourceCreatorId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Report>()
+               .HasOne(p => p.Reporter)
+               .WithMany(p => p.ReportsMade)
+               .HasForeignKey(p => p.ReporterId)
+               .OnDelete(DeleteBehavior.Restrict);
+
+
+            builder.Entity<Notification>()
+                .HasOne(p => p.NotificationRecipient)
+                .WithMany(p => p.Notifications)
+                .HasForeignKey(p => p.NotificationRecipientId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Log>()
+                .HasOne(p => p.User)
+                .WithMany(p => p.Logs)
+                .HasForeignKey(p => p.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
 
 
             base.OnModelCreating(builder);

@@ -11,46 +11,70 @@
     TempData["InvalidOffer"] = false;
 }
 
-@if (TempData.ContainsKey("Success") && (bool)TempData.Peek("Success"))
-{
-    await Html.RenderPartialAsync("Partial/_SuccessfulOffer.cshtml");
-    TempData["Success"] = false;
+@if (TempData.ContainsKey("Error"))
+{ 
+
+    <h3>@TempData["Error"]</h3>
+TempData.Remove("Error");
 }
-<body class="container">
 
-    <br />
-    <div id="allSubjects">
+@if (TempData.ContainsKey("Success"))
+{
+    await Html.RenderPartialAsync("Partial/_Success.cshtml", new { Message = TempData["Success"]});
+    TempData.Remove("Success");
+}
+    <body class="container-fluid">
 
-        @{ int index = 0;}
-        @{ int totalLength = FindMyTutor.Web.Helpers.Constants.ButtonStyles.Length;}
-        @foreach (var subject in Model.Subjects)
-        {
-            int currentIndex = index % totalLength;
-            string currentStyle = FindMyTutor.Web.Helpers.Constants.ButtonStyles[currentIndex];
-            @await Html.PartialAsync("_CreateButton", new CreateSubjectButtonModel { Subject = subject, ButtonStyle = currentStyle });
+        <nav class="nav flex-column bg-light col-lg-2 col-md-3" id="allSubjects">
 
-            index++;
-        }
+            @{ int index = 0;}
+            @{ int totalLength = FindMyTutor.Web.Helpers.Constants.ButtonStyles.Length;}
+            @foreach (var subject in Model.Subjects)
+            {
+                int currentIndex = index % totalLength;
+                string currentStyle = FindMyTutor.Web.Helpers.Constants.ButtonStyles[currentIndex];
+                @await Html.PartialAsync("_CreateButton", new CreateSubjectButtonModel { Subject = subject, ButtonStyle = currentStyle });
 
-    </div>
-    <br />
+                index++;
+            }
 
-    <div>
-        <select id="levels" style="display:none"></select>
+        </nav>
+
+        <div class="jumbotron col-lg-10 col-md-9 bg-light">
+            <h1 class="display-4">Find My Tutor!</h1>
+            <p class="lead">Сайт, в който можете да откриете своя идеален преподавател или да публикувате оферта!</p>
+            <hr class="my-4">
+            <p>Можете да получите подготовка за всеки предмет, който ви интересува, на всяка възраст. Нашите преподаватели ще ви помогнат да постигнете успех във всяка сфера!</p>
+            <a class="btn btn-primary btn-lg" asp-controller="Home" asp-action="About" role="button">Научете повече</a>
+        </div>
         <br />
-    </div>
-    <br />
-    <div id="subjectDiv">
 
-        <select id="subjects" style="display:none"></select>
-        <h4 id="subjectMessage" class="warning" style="display:none">В момента няма такива оферти</h4>
+        <form class="col-lg-10 col-md-9">
+            <div class="row">
+                <div class="col">
+                    <input type="text" class="form-control" placeholder="First name">
+                </div>
+                <div class="col">
+                    <input type="text" class="form-control" placeholder="Last name">
+                </div>
+            </div>
+        </form>
+        <div>
+            <select id="levels" style="display:none"></select>
+            <br />
+        </div>
         <br />
-    </div>
+        <div id="subjectDiv">
 
-    <div id="offers"></div>
+            <select id="subjects" style="display:none"></select>
+            <h4 id="subjectMessage" class="text-danger" style="display:none">В момента няма такива оферти</h4>
+            <br />
+        </div>
+
+        <div id="offers"></div>
 
 
-</body>
+    </body>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
     <script>

@@ -16,16 +16,15 @@ namespace FindMyTutor.Web.Areas.Identity.Pages.Account.Manage
     {
         private readonly UserManager<FindMyTutorUser> _userManager;
         private readonly SignInManager<FindMyTutorUser> _signInManager;
-        private readonly IEmailSender _emailSender;
+        
 
         public IndexModel(
             UserManager<FindMyTutorUser> userManager,
-            SignInManager<FindMyTutorUser> signInManager,
-            IEmailSender emailSender)
+            SignInManager<FindMyTutorUser> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _emailSender = emailSender;
+          
         }
 
         public string Username { get; set; }
@@ -136,10 +135,7 @@ namespace FindMyTutor.Web.Areas.Identity.Pages.Account.Manage
                 pageHandler: null,
                 values: new { userId = userId, code = code },
                 protocol: Request.Scheme);
-            await _emailSender.SendEmailAsync(
-                email,
-                "Confirm your email",
-                $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+           
 
             StatusMessage = "Verification email sent. Please check your email.";
             return RedirectToPage();

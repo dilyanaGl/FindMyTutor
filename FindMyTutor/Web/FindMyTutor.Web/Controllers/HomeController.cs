@@ -34,6 +34,10 @@ namespace FindMyTutor.Web.Controllers
 
         public IActionResult Index()
         {
+            if (HttpContext.User.IsInRole(Constants.Role.Admin))
+            {
+                return this.RedirectToAction("Dashboard", "Home", new { Area = Constants.Role.Admin});
+            }
             var subjects = this.subjectService.GetSubjects()
                 .Select(p => new SubjectViewModel
                 {

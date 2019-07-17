@@ -26,7 +26,9 @@ namespace FindMyTutor.Data.Services.Comments
             var comment = mapper.Map<CommentDTO, Comment>(commentDTO);
            await this.comments.Add(comment);
 
-           return await this.comments.SaveChangesAsync();
+           await this.comments.SaveChangesAsync();
+
+            return comment.Id;
         }
 
         public IEnumerable<Comment> GetAllCommentsForOffer(int offerId)

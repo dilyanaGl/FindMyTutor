@@ -22,6 +22,10 @@ namespace FindMyTutor.Data.Services.Offers
         Task<int> EditOffer(EditOfferDTO offer);
 
         IEnumerable<Offer> GetOfferBySubjectNameId(int subjectNameId);
+
+        string GetOfferCreatorId(int offerId);
+
+        string GetTitleById(int offerId);
        
 
     }

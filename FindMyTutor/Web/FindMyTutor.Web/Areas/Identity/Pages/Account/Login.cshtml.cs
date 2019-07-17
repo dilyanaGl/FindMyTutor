@@ -10,10 +10,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using FindMyTutor.Web.Helpers;
 
 namespace FindMyTutor.Web.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
+
     public class LoginModel : PageModel
     {
         private readonly SignInManager<FindMyTutorUser> _signInManager;
@@ -39,13 +41,15 @@ namespace FindMyTutor.Web.Areas.Identity.Pages.Account
         {
             [Required]
             [EmailAddress]
+            [Display(Name = "Email")]
             public string Email { get; set; }
 
             [Required]
             [DataType(DataType.Password)]
+            [Display(Name = "Парола")]
             public string Password { get; set; }
 
-            [Display(Name = "Remember me?")]
+            [Display(Name = "Запомни ме")]
             public bool RememberMe { get; set; }
         }
 
@@ -56,7 +60,8 @@ namespace FindMyTutor.Web.Areas.Identity.Pages.Account
                 ModelState.AddModelError(string.Empty, ErrorMessage);
             }
 
-            returnUrl = returnUrl ?? Url.Content("~/");
+            //returnUrl = returnUrl ?? Url.Content("~/");
+            returnUrl = "";
 
             // Clear the existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
@@ -68,6 +73,7 @@ namespace FindMyTutor.Web.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
+
             returnUrl = returnUrl ?? Url.Content("~/");
 
             if (ModelState.IsValid)
@@ -80,6 +86,7 @@ namespace FindMyTutor.Web.Areas.Identity.Pages.Account
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);
                 }
+              
                 if (result.RequiresTwoFactor)
                 {
                     return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
@@ -91,11 +98,12 @@ namespace FindMyTutor.Web.Areas.Identity.Pages.Account
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    ModelState.AddModelError(string.Empty, "Невалиден email или парола.");
                     return Page();
                 }
             }
 
+           
             // If we got this far, something failed, redisplay form
             return Page();
         }

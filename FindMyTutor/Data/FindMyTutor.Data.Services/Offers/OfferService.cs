@@ -74,6 +74,17 @@ namespace FindMyTutor.Data.Services.Offers
                 .ToArray();
         }
 
+        public string GetOfferCreatorId(int offerId)
+        {
+            var offer = this.offers.All().FirstOrDefault(p => p.Id == offerId);
+            if(offer == null)
+            {
+                return null;
+            }
+            return offer.TutorId;
+            
+        }
+
         public Offer GetOfferDetails(int id)
         {
             return this.offers.All()
@@ -84,6 +95,11 @@ namespace FindMyTutor.Data.Services.Offers
         {
             return this.offers.All()
                 .Where(p => p.Subject.Name == subject);
+        }
+
+        public string GetTitleById(int offerId)
+        {
+            return this.offers.All().FirstOrDefault(p => p.Id == offerId).Title;
         }
 
         public Task<int> RemoveOffer(int id)

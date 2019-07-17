@@ -18,7 +18,12 @@ namespace FindMyTutor.Data.Models
             this.MadeOffers = new List<Offer>();
             this.GivenRecommendations = new List<Recommendation>();
             this.ReceivedRecommendations = new List<Recommendation>();
-            this.RecommendationsByFriends = new List<Recommendation>();
+            this.RecommendationsByFriends = new List<Recommendation>();           
+            this.ReportsMade = new List<Report>();
+            this.ReportsReceived = new List<Report>();
+            
+            this.Notifications = new List<Notification>();
+            this.Logs = new List<Log>();
             this.TotalRating = 0;
             this.RatingsCount = 0;
         }
@@ -48,6 +53,14 @@ namespace FindMyTutor.Data.Models
         public int RatingsCount { get; set; }
 
         public int TotalRating { get; set; }
+
+        public ICollection<Report> ReportsMade { get; set; }
+
+        public ICollection<Report> ReportsReceived { get; set; }
+
+        public ICollection<Notification> Notifications { get; set; }
+
+        public ICollection<Log> Logs { get; set; }
 
 
     }

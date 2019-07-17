@@ -17,11 +17,6 @@ namespace FindMyTutor.Web.Controllers
             this.subjectService = subjectService;
         }
 
-        ////public IActionResult Index()
-        ////{
-        ////    return View();
-        ////}
-        ///
         [Route("/loadLevels/{id}")]
         public IEnumerable<SelectListItem> GetLevels(int id)
         {
