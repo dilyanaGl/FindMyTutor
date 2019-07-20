@@ -5,82 +5,93 @@
     ViewData["Title"] = "Home Page";
 }
 
-@if (TempData.ContainsKey("InvalidOffer") && (bool)TempData.Peek("InvalidOffer"))
+@if (TempData.ContainsKey(Constants.Message.InvalidOffer) && (bool)TempData.Peek(Constants.Message.InvalidOffer))
 {
     await Html.RenderPartialAsync("Partial/_InvalidView.cshtml");
-    TempData["InvalidOffer"] = false;
+    TempData.Remove(Constants.Message.InvalidOffer);
+
 }
 
 @if (TempData.ContainsKey("Error"))
-{ 
-
+{
     <h3>@TempData["Error"]</h3>
-TempData.Remove("Error");
+    TempData.Remove("Error");
 }
 
 @if (TempData.ContainsKey("Success"))
 {
-    await Html.RenderPartialAsync("Partial/_Success.cshtml", new { Message = TempData["Success"]});
+    await Html.RenderPartialAsync("Partial/_Success.cshtml", new { Message = TempData["Success"] });
     TempData.Remove("Success");
 }
-    <body class="container-fluid">
+<body class="container-fluid">
 
-        <nav class="nav flex-column bg-light col-lg-2 col-md-3" id="allSubjects">
+    <nav class="nav flex-column bg-light col-lg-2 col-md-3
+         " id="allSubjects">
 
-            @{ int index = 0;}
-            @{ int totalLength = FindMyTutor.Web.Helpers.Constants.ButtonStyles.Length;}
-            @foreach (var subject in Model.Subjects)
-            {
-                int currentIndex = index % totalLength;
-                string currentStyle = FindMyTutor.Web.Helpers.Constants.ButtonStyles[currentIndex];
-                @await Html.PartialAsync("_CreateButton", new CreateSubjectButtonModel { Subject = subject, ButtonStyle = currentStyle });
 
-                index++;
-            }
+        @foreach (var subject in Model.Subjects)
+        {
+            @await Html.PartialAsync("_CreateButton", new CreateSubjectButtonModel { Subject = subject });
+        }
 
-        </nav>
+    </nav>
 
-        <div class="jumbotron col-lg-10 col-md-9 bg-light">
-            <h1 class="display-4">Find My Tutor!</h1>
-            <p class="lead">Сайт, в който можете да откриете своя идеален преподавател или да публикувате оферта!</p>
-            <hr class="my-4">
-            <p>Можете да получите подготовка за всеки предмет, който ви интересува, на всяка възраст. Нашите преподаватели ще ви помогнат да постигнете успех във всяка сфера!</p>
-            <a class="btn btn-primary btn-lg" asp-controller="Home" asp-action="About" role="button">Научете повече</a>
-        </div>
-        <br />
+    <div class="jumbotron col-lg-10 col-md-9 bg-light" id="jumbotron">
+        <h1 class="display-4">Find My Tutor!</h1>
+        <p class="lead">Сайт, в който можете да откриете своя идеален преподавател или да публикувате оферта!</p>
+        <hr class="my-4">
+        <p>
+            Можете да откриете урок за всеки предмет, който ви интересува, на всяка възраст. Нашите преподаватели ще ви помогнат да постигнете успех във всяка сфера!
+        </p>
+        <a class="btn btn-primary btn-lg" asp-controller="Home" asp-action="About" role="button">Научете повече</a>
+    </div>
+    <br />
 
-        <form class="col-lg-10 col-md-9">
-            <div class="row">
-                <div class="col">
-                    <input type="text" class="form-control" placeholder="First name">
-                </div>
-                <div class="col">
-                    <input type="text" class="form-control" placeholder="Last name">
-                </div>
+    <form id="subjectLevels" class="col-lg-10 col-md-9">
+        <div class="row justify-content-around">
+            <div class="col-lg-5" id="levelsDiv" style="display:none">
+                <label for="levels" id="levelsLabel" class="text-info">Изберете ниво</label>
+                <select class="form-control" id="levels">
+                    <option selected label="Нива" value="0"></option>
+                </select>
+                <h4 id="noLevels" style="display:none">Няма такива оферти</h4>
             </div>
-        </form>
-        <div>
+            <div class="col-lg-5" id="subjectDiv" style="display:none">
+                <label for="levels" id="subjectLabel" class="text-info">Изберете предмет</label>
+                <select class="form-control" id="subjects"></select>
+                <h4 id="noSubjects" style="display:none">Няма такива оферти</h4>
+            </div>
+        </div>
+    </form>
+    @*<div>
             <select id="levels" style="display:none"></select>
             <br />
         </div>
-        <br />
-        <div id="subjectDiv">
+        <br />*@
+    @*<div id="subjectDiv">
 
             <select id="subjects" style="display:none"></select>
             <h4 id="subjectMessage" class="text-danger" style="display:none">В момента няма такива оферти</h4>
             <br />
-        </div>
+        </div>*@
 
-        <div id="offers"></div>
+    <div class="col-lg-10" id="offers"></div>
 
 
-    </body>
+</body>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
     <script>
 
         function loadLevels(id) {
-
+            $(this).addClass('active');
+            $('#offers').empty();
+            $('#subjectDiv').hide();
+            $('#noLevels').hide();
+            $('#levelsLabel').show();
+            $('#jumbotron').hide();
+            $('#subjectLevels').show();
+            $('#levelsDiv').show();
             $('#subjects').hide();
             $('#subjectMessage').hide();
             $('#offers').hide();
@@ -93,25 +104,34 @@ TempData.Remove("Error");
                 success: function (result) {
                     $('#levels').show();
                     $("#levels").empty();
-                    $('#levels').append('<option label="Изберете ниво" value="0"></option>');
-                    for (let name of result) {
-
-                        console.log(name);
-                        let element = $(`<option label="${name.text}"
-                                      value="${name.value}" onselect="loadSubjectNames(${name.value})"></option>`);
-                        //let label = $("<label>").attr({ for: name.text });
-                        //label.text(name.text);
-
-
-                        $("#levels").append(element);
-                        //$("#levels").append(label);
-                        $("#levels").append("<br>");
+                    $('#levels').append('<option label="Нива" value="0"></option>');
+                    if (result.length == 0) {
+                        $('#levels').hide();
+                        $('#levelsLabel').hide();
+                        $('#noLevels').show();
                     }
+                    else {
+                        for (let name of result) {
+
+                            console.log(name);
+                            let element = $(`<option value="${name.value}" onselect="loadSubjectNames">${name.text}</option>`);
+                            //let label = $("<label>").attr({ for: name.text });
+                            //label.text(name.text);
+                            $("#levels").append(element);
+                            //$("#levels").append(label);
+                            //$("#levels").append("<br>");
+                        }
+                    }
+
                 }
             })
         }
 
+        $('#levels').change(loadSubjectNames);
+        $('#subjects').change(loadOffers);
+
         function loadSubjects() {
+
 
 
             $.ajax({
@@ -129,9 +149,11 @@ TempData.Remove("Error");
 
         }
 
-        $('#levels').change(loadSubjectNames);
-
         function loadSubjectNames() {
+            console.log('enter');
+            $('#offers').empty();
+            //$('#subjectDiv').dropdown('update')
+            $('#subjectDiv').show();
 
             $('#subjects').empty();
 
@@ -139,11 +161,7 @@ TempData.Remove("Error");
             console.log(name);
             let subjectId = $($('.currentlySelected')[0]).attr('id');
             console.log(subjectId);
-
-
             let url = `/loadSubjectNames/${subjectId}/${name}`;
-
-
             $.get({
                 type: 'GET',
                 url: url,
@@ -151,16 +169,18 @@ TempData.Remove("Error");
                     console.log(url);
                     console.log(result);
                     if (result.length == 0) {
-                        $('#subjectMessage').show();
+                        $('#noSubjects').show();
+                        $('#subjects').hide();
+                        $('#subjectLabel').hide();
                     } else {
 
                         $('#subjects').show();
                         $('#subjects').append(`<option label="Изберете предмет"
-                                      value="0"></option>`);
+                                                      value="0"></option>`);
                         for (let name of result) {
-
+                            console.log(name);
                             let element = $(`<option label="${name.text}"
-                                      value="${name.value}"></option>`);
+                                                      value="${name.value}"></option>`);
                             //  console.log(element);
                             //  console.log(element);
 
@@ -175,9 +195,9 @@ TempData.Remove("Error");
             })
         }
 
-        $('#subjects').change(loadOffers)
+       // $('#subjects').change(loadOffers)
         function loadOffers() {
-
+            $('#offers').empty();
             let id = $('#subjects option:selected').val();
             let url = '/getOffersWithSubjectId/' + id;
             $.get({
@@ -191,11 +211,18 @@ TempData.Remove("Error");
                     } else {
 
                         $('#offers').show();
+                        $('#offers').append("<br/>");
 
+                        for (let offer of result) {
 
-                        for (let name of result) {
-
-                            let element = $(`<a class="btn btn-outline-success btn-lg" href="/Offer/Details/${name.id}">${name.title}</a>`);
+                            let element = $(`<div class="card col-lg-5">
+          <img src="${offer.imageUrl}" class="card-img-top" style="width: 300px; height: auto" alt="${offer.title}">
+          <div class="card-body">
+            <h5 class="card-title">${offer.title}</h5>
+            <p class="card-text">Адрес: ${offer.address}</p>
+            <a href="Offer/Details/${offer.id}" class="btn btn-primary">Научете повече</a>
+          </div>
+</div>`);
                             //  console.log(element);
                             //  console.log(element);
 

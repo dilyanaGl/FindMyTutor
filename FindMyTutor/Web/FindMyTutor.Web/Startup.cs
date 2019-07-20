@@ -136,11 +136,8 @@ namespace FindMyTutor.Web
             {
                 // Cookie settings
                 options.Cookie.HttpOnly = true;
-                options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
-
-               
-                options.AccessDeniedPath = Constants.Path.AccessDeniedPath;
-                             
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(5);               
+                options.AccessDeniedPath = Constants.Path.AccessDeniedPath;                             
                 options.SlidingExpiration = true;
                 
             });

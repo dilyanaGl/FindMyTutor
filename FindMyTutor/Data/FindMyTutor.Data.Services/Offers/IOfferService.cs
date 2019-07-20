@@ -26,6 +26,8 @@ namespace FindMyTutor.Data.Services.Offers
         string GetOfferCreatorId(int offerId);
 
         string GetTitleById(int offerId);
+
+        
        
 
     }

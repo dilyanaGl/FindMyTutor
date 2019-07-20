@@ -12,18 +12,20 @@
             <li>
                 <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Здравей, @UserManager.GetUserName(User)!</a>
             </li>
-            @if (User.IsInRole("Tutor"))
+            @if (User.IsInRole(Constants.Role.Tutor))
             {
                 <li>
                     <a asp-controller="Offer" asp-action="Create">Добави оферта</a>
                 </li>
             }
+            @if (User.IsInRole(Constants.Role.Admin))
+            {
+                <li>
+                    <a asp-area="Admin" asp-controller="Report" asp-action="All">Добави оферта</a>
+                </li>
+            }
             <li>
                 <a asp-area="" asp-controller="Message" asp-action="All">Съобщения</a>
-            </li>
-
-            <li>
-                <a asp-area=""  asp-controller="Notifications" asp-action="All">Известия</a>
             </li>
 
             <li>
