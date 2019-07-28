@@ -61,8 +61,11 @@ namespace FindMyTutor.Data.Services.Offers
             offer.SubjectId = edit.SubjectNameId;
             offer.Title = edit.Title;
 
+           
 
-            return await this.offers.SaveChangesAsync();
+            int result = await this.offers.SaveChangesAsync();
+
+            return edit.Id;
 
         }
 
@@ -91,10 +94,19 @@ namespace FindMyTutor.Data.Services.Offers
                 .FirstOrDefault(p => p.Id == id);
         }
 
+       
+
         public IEnumerable<Offer> GetOffersBySubject(string subject)
         {
             return this.offers.All()
                 .Where(p => p.Subject.Name == subject);
+        }
+
+        public IEnumerable<Offer> GetOffersByUser(string userId)
+        {
+            return this.offers.All()
+                .Where(p => p.TutorId == userId)
+                .ToArray();
         }
 
         public string GetTitleById(int offerId)
@@ -104,8 +116,9 @@ namespace FindMyTutor.Data.Services.Offers
 
         public Task<int> RemoveOffer(int id)
         {
-            var offer = this.offers
+             var offer = this.offers
                 .All()
+                .AsNoTracking()
                 .Where(p => p.Id == id)
                 .FirstOrDefault();
 

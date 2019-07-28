@@ -44,8 +44,7 @@ namespace FindMyTutor.Web.Controllers
                     SubjectId = p.Id,
                     SubjectName = p.Name
                 });
-            // var levels = this.subjectService.GetLevels();
-            var buttonStyles = Constants.ButtonStyles;
+          
 
             var model = new HomeViewModel
             {

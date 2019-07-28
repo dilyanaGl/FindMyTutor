@@ -39,6 +39,16 @@ namespace FindMyTutor.Data.Services.Comments
             
         }
 
+        public string GetCommentAuthorId(int commentId)
+        {
+            return this.comments.All().FirstOrDefault(p => p.Id == commentId).CommenterId;
+        }
+
+        public int GetOfferIdByCommentId(int commentId)
+        {
+            return this.comments.All().FirstOrDefault(p => p.Id == commentId).OfferId;
+        }
+
         public void RemoveComment(int commentId)
         {
             var comment = this.comments.All().FirstOrDefault(p => p.Id == commentId);

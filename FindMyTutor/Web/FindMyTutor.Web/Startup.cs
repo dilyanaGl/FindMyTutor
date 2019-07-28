@@ -38,6 +38,7 @@ using FindMyTutor.Web.Areas.Admin.Models.Profiles;
 using FindMyTutor.Data.Services.Reports;
 using FindMyTutor.Web.ViewModels.Notifications.Profiles;
 using FindMyTutor.Data.Services.Notifications;
+using FindMyTutor.Web.ViewModels.Users.Profiles;
 
 namespace FindMyTutor.Web
 {
@@ -85,7 +86,7 @@ namespace FindMyTutor.Web
                 options.AddPolicy(Constants.Policy.MustBeTutor, policy =>
                             policy.RequireRole(Constants.Role.Tutor));
                 options.AddPolicy(Constants.Policy.MustBeCreator, policy =>
-                            policy.Requirements.Add(new CheckRolePermission(Constants.Role.Tutor)));
+                            policy.Requirements.Add(new CheckRolePermission(Constants.Role.Creator)));
                 options.AddPolicy(Constants.Policy.MessageRequirement,
                     policy => policy.Requirements.Add(new MessageRequirement()));
 
@@ -108,6 +109,7 @@ namespace FindMyTutor.Web
             services.AddScoped<ILogService, LogService>();
             services.AddScoped<IReportService, ReportService>();
             services.AddScoped<INotificationService, NotificationService>();
+            services.AddScoped<ILogDescriptionBuilder, DescriptionBuilder>();
 
             services.AddRouting();
             var mapperConfig = new MapperConfiguration(mc =>
@@ -118,6 +120,7 @@ namespace FindMyTutor.Web
                mc.AddProfile<LogProfile>();
                mc.AddProfile<ReportProfile>();
                mc.AddProfile<NotificationProfile>();
+               mc.AddProfile<UserProfile>();
            });
 
             IMapper mapper = mapperConfig.CreateMapper();

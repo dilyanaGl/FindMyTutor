@@ -27,6 +27,10 @@ namespace FindMyTutor.Data.Services.Offers
 
         string GetTitleById(int offerId);
 
+        IEnumerable<Offer> GetOffersByUser(string userId);
+
+        
+
         
        
 

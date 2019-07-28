@@ -11,8 +11,7 @@
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
     <PackageReference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform" Version="2.0.1" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.1.2" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.9" />
     <PackageReference Include="popper.js" Version="1.14.3" />
   </ItemGroup>
 
@@ -25,7 +24,6 @@
 
   <ItemGroup>
     <Folder Include="Areas\Identity\Pages\Account\Views\Account\" />
-    <Folder Include="Views\User\" />
   </ItemGroup>
 
   <ItemGroup>

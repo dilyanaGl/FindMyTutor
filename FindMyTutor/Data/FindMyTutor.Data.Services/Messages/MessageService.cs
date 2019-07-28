@@ -14,16 +14,14 @@ namespace FindMyTutor.Data.Services.Messages
     public class MessageService : IMessageService
     {
         private readonly IRepository<Message> messages;
-        private readonly IRepository<Offer> offers;
         private readonly IMapper mapper;
 
-        public MessageService(IRepository<Message> messages,
-            IRepository<Offer> offers,
+        public MessageService(IRepository<Message> messages,           
             IMapper mapper)
         {
             this.messages = messages;
             this.mapper = mapper;
-            this.offers = offers;
+            
         }
 
         public async Task<Message> GetMessage(int id)
@@ -68,8 +66,8 @@ namespace FindMyTutor.Data.Services.Messages
         {
             var message = mapper.Map<MessageDTO, Message>(messageDTO);
             message.SendDate = DateTime.Now;
-            await this.messages.Add(message);
-            await this.messages.SaveChangesAsync();
+            int add = await this.messages.Add(message);
+            int result = await this.messages.SaveChangesAsync();
             return message.Id;
         }
 

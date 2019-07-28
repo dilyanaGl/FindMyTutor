@@ -19,6 +19,7 @@ namespace FindMyTutor.Data
         public DbSet<Offer> Offers { get; set; }
         public DbSet<SubjectName> SubjectNames { get; set; }
         public DbSet<Report> Reports { get; set; }
+        public DbSet<Log> Log { get; set; }
       
         public DbSet<Notification> Notifications { get; set; }
                

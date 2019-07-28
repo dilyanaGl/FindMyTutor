@@ -5,24 +5,12 @@
     ViewData["Title"] = "Home Page";
 }
 
-@if (TempData.ContainsKey(Constants.Message.InvalidOffer) && (bool)TempData.Peek(Constants.Message.InvalidOffer))
+@if (User.Identity.IsAuthenticated)
 {
-    await Html.RenderPartialAsync("Partial/_InvalidView.cshtml");
-    TempData.Remove(Constants.Message.InvalidOffer);
-
+    await Html.PartialAsync("~/Views/Shared/_TempDataValidation.cshtml");
 }
 
-@if (TempData.ContainsKey("Error"))
-{
-    <h3>@TempData["Error"]</h3>
-    TempData.Remove("Error");
-}
 
-@if (TempData.ContainsKey("Success"))
-{
-    await Html.RenderPartialAsync("Partial/_Success.cshtml", new { Message = TempData["Success"] });
-    TempData.Remove("Success");
-}
 <body class="container-fluid">
 
     <nav class="nav flex-column bg-light col-lg-2 col-md-3

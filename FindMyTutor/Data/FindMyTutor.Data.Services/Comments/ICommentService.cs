@@ -16,6 +16,10 @@ namespace FindMyTutor.Data.Services.Comments
 
         Task<int> AddComment(CommentDTO commentDTO);
 
+        int GetOfferIdByCommentId(int commentId);
+
+        string GetCommentAuthorId(int commentId);
+
 
 
     }

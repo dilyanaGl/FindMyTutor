@@ -13,27 +13,26 @@ namespace FindMyTutor.Data
     {
         private readonly FindMyTutorWebContext context;
         private readonly DbSet<TEntity> dbSet;
-        private bool isDisposed;
+       
 
         public DbRepository(FindMyTutorWebContext context)
         {
             this.context = context;
             this.dbSet = this.context.Set<TEntity>();
-            this.isDisposed = false;
+            
 
         }
 
-        public async Task Add(TEntity entity)
+        public async Task<int> Add(TEntity entity)
         {
-            await this.dbSet.AddAsync(entity);
-
-            
+            var added = await this.dbSet.AddAsync(entity);
+            return 0;          
 
         }
 
         public IQueryable<TEntity> All()
         {
-            return this.dbSet.AsNoTracking();
+            return this.dbSet;
         }
 
         public void Dispose()

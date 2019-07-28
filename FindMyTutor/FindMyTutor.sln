@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.489
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29102.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FindMyTutor.Web", "Web\FindMyTutor.Web\FindMyTutor.Web.csproj", "{1F5E0B98-018A-4D8D-BFF4-9D2E2C87CC42}"
 EndProject
@@ -17,7 +17,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sandbox", "Sandbox\Sandbox.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FindMyTutor.Common", "Data\FindMyTutor.Common\FindMyTutor.Common.csproj", "{237BF451-1216-425F-9CA1-65C184491D8C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FindMyTutor.Data.Services", "Data\FindMyTutor.Data.Services\FindMyTutor.Data.Services.csproj", "{7F509167-25FB-49DF-8269-18E06BFBBDBA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FindMyTutor.Data.Services", "Data\FindMyTutor.Data.Services\FindMyTutor.Data.Services.csproj", "{7F509167-25FB-49DF-8269-18E06BFBBDBA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{9B3CB3EE-92F4-43E8-B3BD-1B8CB08A6554}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,6 +51,10 @@ Global
 		{7F509167-25FB-49DF-8269-18E06BFBBDBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7F509167-25FB-49DF-8269-18E06BFBBDBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7F509167-25FB-49DF-8269-18E06BFBBDBA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B3CB3EE-92F4-43E8-B3BD-1B8CB08A6554}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B3CB3EE-92F4-43E8-B3BD-1B8CB08A6554}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B3CB3EE-92F4-43E8-B3BD-1B8CB08A6554}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B3CB3EE-92F4-43E8-B3BD-1B8CB08A6554}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -59,6 +65,7 @@ Global
 		{80527F78-151F-46E7-9CF6-D4182FE3FAA4} = {EC7CA870-5A4A-4BDB-A018-5DBB93A2592B}
 		{237BF451-1216-425F-9CA1-65C184491D8C} = {E5CC9B95-E48F-4E7F-BCDB-8E99A70BA631}
 		{7F509167-25FB-49DF-8269-18E06BFBBDBA} = {E5CC9B95-E48F-4E7F-BCDB-8E99A70BA631}
+		{9B3CB3EE-92F4-43E8-B3BD-1B8CB08A6554} = {EC7CA870-5A4A-4BDB-A018-5DBB93A2592B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {695BDFEB-EC76-4181-B264-9F8FD7258F1D}

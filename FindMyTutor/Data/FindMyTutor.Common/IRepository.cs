@@ -10,11 +10,13 @@ namespace FindMyTutor.Common
     {
         IQueryable<TEntity> All();
 
-        Task Add(TEntity entity);
+        Task<int> Add(TEntity entity);
 
         void Remove(TEntity entity);
 
         Task<int> SaveChangesAsync();    
+
+
 
         
     }
