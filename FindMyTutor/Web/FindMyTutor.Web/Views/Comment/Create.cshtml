@@ -1,0 +1,39 @@
+﻿@model FindMyTutor.Web.ViewModels.Comments.CreateCommentReportViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Докладвай коментар</h2>
+
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-controller="Comment" asp-action="Report" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <input hidden asp-for="CommentId" value="@ViewData["CommentId"]" class="form-control" />
+                <span asp-validation-for="CommentId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Rationale" class="control-label"></label>
+                <input asp-for="Rationale" class="form-control" />
+                <span asp-validation-for="Rationale" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateTime" class="control-label"></label>
+                <input asp-for="DateTime" class="form-control" />
+                <span asp-validation-for="DateTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Докладвай" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

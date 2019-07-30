@@ -1,0 +1,71 @@
+﻿@model FindMyTutor.Web.ViewModels.Offers.EditOfferViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Редактиране</h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-route="Offer/Edit/@Model.Id" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+                <input type="hidden" asp-for="Id"/> 
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+                <div class="form-group">
+                <label asp-for="Price" class="control-label"></label>
+                <input id="priceBox" asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+                <input type="hidden" id="originalPrice" asp-for="Price" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="SharePriceOptions" class="control-label"></label>
+                <input type="checkbox" asp-for="SharePriceOptions" onclick="disablePriceBox()" />
+            </div>
+            <div class="form-group">
+                <label asp-for="ImageUrl" class="control-label"></label>
+                <input asp-for="ImageUrl" class="form-control" />
+                <span asp-validation-for="ImageUrl" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Address" class="control-label"></label>
+                <input asp-for="Address" class="form-control" />
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Запази промените" class="btn btn-success"/>
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+    <script>
+
+        function disablePriceBox() {
+            $('#priceBox').val("");
+        var isDisabled = $("#priceBox").prop("disabled");
+            $("#priceBox").attr("disabled", !isDisabled);
+
+            if (isDisabled) {
+                $('#priceBox').val($('#originalPrice').val());
+            }
+    } 
+
+    </script>
+
+}
+<div>
+    <a asp-controller="Offer" asp-action="Details" asp-route-id="@Model.Id">Обратно</a>
+</div>
+

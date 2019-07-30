@@ -1,0 +1,43 @@
+﻿@model IEnumerable<FindMyTutor.Web.ViewModels.Messages.SenderViewModel>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.SenderName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SenderId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MessagesCount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Topic)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.SenderName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SenderId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MessagesCount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Topic)
+            </td>
+            <td>
+                @Html.ActionLink("Message", "Correspondence", new { id = item.SenderId })               
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

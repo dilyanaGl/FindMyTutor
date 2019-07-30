@@ -1,0 +1,58 @@
+﻿@model FindMyTutor.Web.ViewModels.Comments.AddCommentViewModel
+
+<hr />
+<div class="row">
+    <div class="col-md-4 col-lg-offset-6">
+        <form asp-action="Add" asp-controller="Comment" id="form" enctype="multipart/form-data" method="post" >
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Content" class="control-label"></label>
+                <textarea id="content" asp-for="Content" class="form-control"></textarea>
+                <span asp-validation-for="Content" class="text-danger"></span>
+                <input id="offerId" type="hidden" asp-for="OfferId" value="@ViewData["Id"]" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Rating" class="control-label"></label>
+                <input id="rating" asp-for="Rating" class"form-control" />
+                <span asp-validation-for="Rating" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Добави коментар" class="btn btn-info" 
+                      />
+            </div>
+        </form>
+    </div>
+</div>
+
+@*@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial"); }*@
+    <script>
+
+        function submitComment(caller) {           
+
+            let formData = new FormData();
+            formData.content = $('#content').val();
+            formData.offerId = $('#offerId').val();
+            formData.rating = $('#rating').val();
+
+            console.log(caller);
+            let url = "/Comment/Add";
+            $.post({
+                type: "POST",
+                data: formData,
+                url: url,
+                success: addAndDisplayComment(result),               
+
+            });
+
+            function addAndDisplayComment(result) {
+                console.log(result);
+            }
+        }
+    </script>
+    @*}*@
+
+
+

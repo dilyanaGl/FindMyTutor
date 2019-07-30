@@ -1,0 +1,34 @@
+﻿@model FindMyTutor.Web.ViewModels.Offers.ReportOfferViewModel
+
+@{
+    ViewData["Title"] = "Report";
+}
+
+<h2 class="text-info">Докладвай оферта</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-controller="Offer" asp-action="Report" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group" style="display:none">
+                <label asp-for="OfferId" class="control-label"></label>
+                <input hidden asp-for="OfferId" value="@ViewData["OfferId"]" class="form-control" />
+                <span asp-validation-for="OfferId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Rationale" class="control-label"></label>
+                <textarea asp-for="Rationale" class="form-control" ></textarea>
+                <span asp-validation-for="Rationale" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Докладвай" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-controller="Offer" asp-action="Details" asp-route-id="@ViewData["OfferId"]">Обратно към оферта</a>
+</div>
+

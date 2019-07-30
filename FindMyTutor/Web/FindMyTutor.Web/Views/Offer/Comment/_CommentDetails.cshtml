@@ -1,0 +1,65 @@
+﻿@model FindMyTutor.Web.ViewModels.Comments.CommentViewModel
+
+
+<div class="alert alert-info col-lg-7" role="alert">
+    <h4>@Model.CommenterName</h4>
+    <p class="text-left">@Model.Content</p><p class="text-right">
+    @if(Model.Rating != 0)
+    {
+        <span>Оценка: @Model.Rating</span>
+    }
+        
+        <span>
+            @if (User.HasClaim(p => p.Type == Constants.Role.Creator && p.Value == Model.OfferId.ToString()))
+            {
+            <a class="btn btn-danger" asp-controller="Comment" asp-action="Report" asp-route-id="@Model.Id">Докладвай</a>
+            }
+        </span>
+    </p>
+</div>
+
+
+
+
+@*<div class="col-lg-6">
+    <hr />
+
+
+
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">@Model.CommenterName</h5>
+            <h6 class="card-subtitle mb-2 text-muted">Оценка: @Model.Rating</h6>
+            <p class="card-text">@Model.Content</p>
+         </div>
+    </div>*@
+@*<dl class="dl-horizontal">
+
+
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Content)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Content)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PublishDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PublishDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Rating)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Rating)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CommenterName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CommenterName)
+        </dd>
+    </dl>*@

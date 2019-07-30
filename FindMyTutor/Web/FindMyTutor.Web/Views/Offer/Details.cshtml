@@ -1,0 +1,123 @@
+﻿@model FindMyTutor.Web.ViewModels.Offers.OfferDetailsViewModel
+
+@{
+    ViewData["Title"] = "Details";
+    ViewData["Id"] = Model.Id;
+}
+
+@if (User.Identity.IsAuthenticated && User.HasClaim(p => p.Type == Constants.Role.Creator && p.Value == Model.Id.ToString()))
+{
+    await Html.PartialAsync("~/Views/Shared/_TempDataValidation.cshtml", this.TempData);
+}
+
+<h2 class="text-info">@Model.Title</h2>
+
+
+
+<div class="card">
+    <img src="@Model.ImageUrl" class="card-img-top" alt="@Model.Title">
+    <div class="card-body">
+        <h3 class="card-title">Преподавател: @Model.TutorName</h3>
+        <p class="card-text">@Model.Description</p>
+        <h5 class="card-title">@Model.Address</h5>
+        <h5 class="card-title">Цена: @Model.PriceDisplay</h5>
+    </div>
+</div>
+<br />
+
+@*<div>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Title)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Title)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.ImageUrl)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.ImageUrl)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.PriceDisplay)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.PriceDisplay)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.PublishDate)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.PublishDate)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.ExpirationDate)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.ExpirationDate)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Address)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Address)
+            </dd>
+
+        </dl>
+    </div>*@
+<h3 class="display-2">Коментари:</h3>
+<div class="col-lg-10">
+    @if (Model.Comments.Any())
+    {
+        foreach (var comment in Model.Comments)
+        {
+
+            await Html.RenderPartialAsync("Comment/_CommentDetails.cshtml", comment, ViewData);
+        }
+
+    }
+    else
+    {
+        <p>Офертата няма коментари</p>
+    }
+</div>
+<br />
+@if (User.Identity.IsAuthenticated && !User.HasClaim(p => p.Type == Constants.Role.Creator && p.Value == Model.Id.ToString()))
+{
+    await Html.RenderPartialAsync("Comment/_Add.cshtml", Model.AddComment);
+}
+
+
+<div class="col-lg-12">
+    @if (User.Identity.IsAuthenticated)
+    {
+        if (User.HasClaim(p => p.Type == Constants.Role.Creator && p.Value == Model.Id.ToString()))
+        {
+            <a class="btn btn-primary" asp-controller="Offer" asp-action="Edit" asp-route-id="@Model.Id">Редактиране</a>
+
+            <a class="btn btn-danger" asp-controller="Offer" asp-action="Delete" asp-route-id="@Model.Id">Изтриване</a>
+
+        }
+        else
+        {
+            <a class="btn btn-success" asp-controller="Message" asp-action="Create" asp-route-id="@Model.Id">Изпрати съобщение</a>
+
+            <a class="btn btn-danger" asp-controller="Offer" asp-action="Report" asp-route-id="@Model.Id">Докладвай оферта</a>
+
+        }
+    }
+
+    <a class="btn btn-info" asp-controller="Home" asp-action="Index">Начало</a>
+
+</div>
+
+<br />
+

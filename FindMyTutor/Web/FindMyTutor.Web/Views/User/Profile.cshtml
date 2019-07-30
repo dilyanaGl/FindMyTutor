@@ -1,0 +1,24 @@
+﻿@model FindMyTutor.Web.ViewModels.Users.UserProfileViewModel
+
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<h2 class="text-primary">Профил</h2>
+
+
+<div class="card" style="width: 28rem;">
+
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">Потребителско име: @Model.Username</li>
+        <li class="list-group-item">Име: @Model.FullName</li>
+        <li class="list-group-item">Email: @Model.Email</li>
+    </ul>
+
+</div>
+
+@if (User.IsInRole(Constants.Role.Tutor))
+{
+   await Html.RenderPartialAsync("Partial/_UserOffers.cshtml", Model.Offers);
+}
+

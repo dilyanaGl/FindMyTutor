@@ -1,0 +1,46 @@
+﻿@model FindMyTutor.Web.ViewModels.Message.CreateMessageViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Напиши съобщение</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-controller="Message" asp-action="Create" asp-route-id="@Model.OfferId">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Subject" class="control-label"></label>
+                <input asp-for="Subject" class="form-control" />
+                <span asp-validation-for="Subject" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Content" class="control-label"></label>
+                <textarea asp-for="Content" class="form-control"></textarea>
+                <span asp-validation-for="Content" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="hidden" asp-for="RecipientId" class="form-control" />
+                <span asp-validation-for="RecipientId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="hidden" asp-for="OfferId" class="form-control" />
+                <span asp-validation-for="OfferId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Изпрати" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+    <div>
+        <a asp-controller="Offer" asp-action="Details" asp-route-id="@Model.OfferId">Обратно към оферта</a>
+    </div>
+
+
+
+

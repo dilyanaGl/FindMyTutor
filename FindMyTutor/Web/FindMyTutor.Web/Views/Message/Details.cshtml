@@ -1,0 +1,69 @@
+﻿@using FindMyTutor.Web.ViewModels.Message;
+@model FindMyTutor.Web.ViewModels.Message.MessageViewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+<br />
+<h2 class="text-info">@Model.SenderName</h2>
+<div class="card bg-info" style="width: 28rem; padding:10px">
+    <div class="card-body">
+        <p class="card-text"><b>Относно:</b> @Model.OfferTitle</p>
+        <p class="card-text">@Model.Content</p>
+        <p class="card-text">@Model.SendDate</p>
+
+    </div>
+</div>
+
+@*<div>
+        <hr />
+
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.ReceiverName)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.ReceiverName)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.SenderName)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.SenderName)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Subject)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Subject)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Content)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Content)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.SendDate)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.SendDate)
+            </dd>
+        </dl>
+    </div>
+    <div>*@
+
+<div class="col-lg-offset-5">
+    @{ await Html.RenderPartialAsync("Partial/_Respond.cshtml", new CreateMessageViewModel());};
+</div>
+<br />
+@if (Model.OfferId != null)
+{
+    <a asp-action="Details" asp-controller="Offer" asp-route-id="@Model.OfferId.Value">Детайли за оферта</a>
+}
+else
+{
+    <a asp-action="Index" asp-controller="Home">Обратно</a>
+}
+
+</div>

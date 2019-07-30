@@ -1,0 +1,72 @@
+﻿@model IEnumerable<FindMyTutor.Web.ViewModels.Message.MessageViewModel>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.SenderName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Content)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SendDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OfferTitle)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.SenderName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Content)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SendDate)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.OfferTitle)
+                </td>
+                <td>
+                    @Html.ActionLink("Пълна кореспонденция", "Details", "Message", new { id = item.Id })
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+
+@foreach (var message in Model)
+{
+    if (!message.IsReceived)
+    {
+        <div class="card bg-info" style="width: 28rem; padding:10px">
+            <div class="card-body">
+                <p class="card-text">@message.Content</p>
+                <p class="card-text">@message.SendDate</p>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="col-lg-offset-5">
+           <div class="card bg-primary" style="width: 28rem; padding:10px">
+            <div class="card-body">
+                <p class="card-text">@message.Content</p>
+                <p class="card-text">@message.SendDate</p>
+            </div>
+        </div>
+      </div>
+    }
+
+}

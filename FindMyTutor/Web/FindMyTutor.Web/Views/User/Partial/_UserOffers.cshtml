@@ -1,0 +1,78 @@
+﻿@model IEnumerable<FindMyTutor.Web.ViewModels.Users.ProfileOfferViewModel>
+
+
+<h3>Оферти</h3>
+@if (Model.Any())
+{
+    @foreach (var offer in Model)
+    {
+        <div class="col-lg-5" style="padding-bottom:20px">
+            <div class="card" style="width: 18rem;">
+                <img src="@offer.ImageUrl" class="card-img-top" style="width:300px" alt="@offer.Title">
+                <div class="card-body">
+                    <h5 class="card-title">@offer.Title</h5>
+                    <p class="card-text">@offer.Description</p>
+                    <a asp-controller="Offer" asp-action="Details" asp-route-id="@offer.Id" class="btn btn-primary">Повече</a>
+                </div>
+            </div>
+        </div>
+    }
+}
+else
+{
+    <p>За момента нямате оферти. Можете да създадете <a asp-action="Create" asp-controller="Offer">тук</a></p>
+}
+
+
+
+@*<p>
+        <a asp-action="Create">Create New</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Title)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Address)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ImageUrl)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+    @foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ImageUrl)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+    }
+        </tbody>
+    </table>*@

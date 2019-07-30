@@ -1,0 +1,24 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@if (TempData.ContainsKey(Constants.Message.InvalidOffer) && (bool)TempData.Peek(Constants.Message.InvalidOffer))
+{
+    await Html.RenderPartialAsync("Validation/_InvalidView.cshtml", TempData);
+    TempData.Remove(Constants.Message.InvalidOffer);
+    
+
+}
+
+@if (TempData.ContainsKey(Constants.ValidationState.Error))
+{
+<div class="alert alert-danger" role="alert">
+    @TempData[Constants.ValidationState.Error]
+</div>
+    TempData.Remove(Constants.ValidationState.Error);
+}
+
+@if (TempData.ContainsKey(Constants.ValidationState.Success))
+{
+    await Html.RenderPartialAsync("Validation/_Success.cshtml", new { Message = TempData[Constants.ValidationState.Success] });
+    TempData.Remove(Constants.ValidationState.Success);
+}

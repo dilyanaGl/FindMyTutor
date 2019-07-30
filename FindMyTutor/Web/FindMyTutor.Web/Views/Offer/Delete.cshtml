@@ -1,0 +1,84 @@
+﻿@model FindMyTutor.Web.ViewModels.Offers.DeleteOfferViewModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2 class="text-info">Изтриване на оферта</h2>
+
+<div>
+
+    <hr />
+
+    <div class="card">
+        <img src="@Model.ImageUrl" class="card-img-top" alt="@Model.Title">
+        <div class="card-body">
+            <p class="card-text">@Model.Title</p>
+            <p class="card-text">@Model.Description</p>
+            <h5 class="card-title">@Model.Address</h5>
+            <h5 class="card-title">Цена: @Model.PriceDisplay</h5>
+        </div>
+    </div>
+    <br />
+    @*<dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.SubjectName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SubjectName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PublishDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PublishDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ExpirationDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ExpirationDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PriceDisplay)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PriceDisplay)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ImageUrl)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ImageUrl)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+    </dl>*@
+
+    <form asp-action="Delete" method="post">
+        <input type="submit" value="Изтриване" class="btn btn-danger" /> |
+        <a class="btn btn-info" asp-controller="Home" asp-action="Index">Обратно</a>
+    </form>
+</div>
