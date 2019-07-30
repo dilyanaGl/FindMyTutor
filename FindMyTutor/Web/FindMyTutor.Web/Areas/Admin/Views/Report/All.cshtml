@@ -1,0 +1,17 @@
+﻿@model FindMyTutor.Web.Areas.Admin.Models.Reports.AllReportsViewModel
+
+@{
+    ViewData["Title"] = "All";
+}
+
+<h2>Докладвания</h2>
+
+<div>
+
+    <hr />
+    @{await Html.RenderPartialAsync("Partial/_ReportedOffers.cshtml", Model.Offers);}
+    <br/>
+    <br/>
+    @{await Html.RenderPartialAsync("Partial/_ReportedComments.cshtml", Model.Comments);}
+</div>
+

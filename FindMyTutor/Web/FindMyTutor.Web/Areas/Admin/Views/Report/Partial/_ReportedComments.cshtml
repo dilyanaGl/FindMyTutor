@@ -1,0 +1,56 @@
+﻿@model IEnumerable<FindMyTutor.Web.Areas.Admin.Models.Reports.ReportCommentViewModel>
+
+<h3 class="text-info">Докладвани коментари</h3>
+
+@if (!Model.Any())
+{
+    <br/>
+    <h5>Няма докладвани коментари</h5>
+}
+else
+{
+    <table class="table table-hover">
+    <thead>
+        <tr>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Rationale)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.ResourceCreatorName)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.ReporterName)
+            </th>
+
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Rationale)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.ResourceCreatorName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReporterName)
+                </td>
+
+                <td>
+                    @Html.ActionLink("Изтриване", "Delete", "Comment", new { id = item.OfferId, area = "" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+}
+

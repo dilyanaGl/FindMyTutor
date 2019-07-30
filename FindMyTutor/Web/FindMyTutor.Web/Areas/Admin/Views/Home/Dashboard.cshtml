@@ -1,0 +1,63 @@
+﻿@model IEnumerable<FindMyTutor.Web.Areas.Admin.Models.LogViewModel>
+
+<div class="container">
+
+    @{await Html.PartialAsync("/Views/Shared/_TempDataValidation.cshtml", new { TempData}); }
+    
+
+    <h3>Събития</h3>
+    <hr />
+    @foreach (var log in Model)
+    {
+        await Html.RenderPartialAsync("Partial/_Alert.cshtml", log);
+    }
+</div>
+
+@*<table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Username)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ResourceType)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ResourceId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DateTime)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+    @foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Username)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ResourceType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ResourceId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateTime)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+    }
+        </tbody>
+    </table>*@
