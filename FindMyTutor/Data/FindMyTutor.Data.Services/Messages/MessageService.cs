@@ -80,5 +80,31 @@ namespace FindMyTutor.Data.Services.Messages
 
             return await this.messages.SaveChangesAsync();
         }
+
+        public IEnumerable<Message> GetFullCorrespondence(string senderId, string receiverId)
+        {
+            return this.messages.All()
+                .Where(p => (p.ReceiverId == receiverId && p.SenderId == senderId)
+                || (p.SenderId == receiverId && p.ReceiverId == senderId))
+                .OrderBy(p => p.SendDate)
+                .ToArray();
+        }
+
+        public IEnumerable<MailMessageDTO> GetMail(string userId)
+        {
+            return this.messages.All()
+                .Where(p => p.ReceiverId == userId)
+                .GroupBy(p => p.SenderId)
+                .Select((p) =>                
+                     new MailMessageDTO()
+                    {
+                        SenderId = p.Key,
+                        MessagesCount = p.Count(),
+                        Topic = p.OrderBy(k => k.SendDate).FirstOrDefault().Subject
+                    }                   
+                )
+                .ToArray();
+        }
     }
 }
+

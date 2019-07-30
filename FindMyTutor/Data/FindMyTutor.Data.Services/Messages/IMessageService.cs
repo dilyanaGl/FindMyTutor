@@ -24,5 +24,11 @@ namespace FindMyTutor.Data.Services.Messages
         IEnumerable<Message> GetReadMessages(string id);
 
         Task<int> SetMessageToRead(int id);
+
+        IEnumerable<Message> GetFullCorrespondence(string senderId, string receiverId);
+
+        IEnumerable<MailMessageDTO> GetMail(string userId);
+
+        
     }
 }

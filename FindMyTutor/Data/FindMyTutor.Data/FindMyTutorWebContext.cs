@@ -18,7 +18,9 @@ namespace FindMyTutor.Data
         public DbSet<Recommendation> Recommendations { get; set; }
         public DbSet<Offer> Offers { get; set; }
         public DbSet<SubjectName> SubjectNames { get; set; }
-        public DbSet<Report> Reports { get; set; }
+        public DbSet<ReportedOffer> ReportedOffers { get; set; }
+        public DbSet<ReportedComment> ReportedComment { get; set; }
+
         public DbSet<Log> Log { get; set; }
       
         public DbSet<Notification> Notifications { get; set; }
@@ -38,98 +40,124 @@ namespace FindMyTutor.Data
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<Comment>()
-                         .HasOne(p => p.Commenter)
-                         .WithMany(p => p.Comments)
-                         .HasForeignKey(p => p.CommenterId)
-                         .OnDelete(DeleteBehavior.Restrict);
+                 .HasOne(p => p.Commenter)
+                 .WithMany(p => p.Comments)
+                 .HasForeignKey(p => p.CommenterId)
+                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<Message>()
                 .HasOne(p => p.Sender)
                 .WithMany(p => p.SentMessages)
                 .HasForeignKey(p => p.SenderId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.ClientSetNull);
 
             builder.Entity<Message>()
                 .HasOne(p => p.Receiver)
                 .WithMany(p => p.ReveivedMessages)
                 .HasForeignKey(p => p.ReceiverId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.ClientSetNull);
 
             builder.Entity<Recommendation>()
                 .HasOne(p => p.Recommender)
                 .WithMany(p => p.GivenRecommendations)
                 .HasForeignKey(p => p.RecommenderId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.ClientSetNull);
 
             builder.Entity<Recommendation>()
             .HasOne(p => p.Recommendee)
             .WithMany(p => p.ReceivedRecommendations)
             .HasForeignKey(p => p.RecommendeeId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.ClientSetNull);
 
             builder.Entity<Recommendation>()
             .HasOne(p => p.RecommendTo)
             .WithMany(p => p.RecommendationsByFriends)
             .HasForeignKey(p => p.RecommendToId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.ClientSetNull);
 
 
             builder.Entity<Review>()
                 .HasOne(p => p.Reviewer)
                 .WithMany(p => p.GivenReviews)
                 .HasForeignKey(p => p.ReviewerId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.ClientSetNull);
 
 
             builder.Entity<Review>()
                 .HasOne(p => p.Reviewee)
                 .WithMany(p => p.ReceivedReviews)
                 .HasForeignKey(p => p.RevieweeId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.ClientSetNull);
 
 
             builder.Entity<Offer>()
                 .HasOne(p => p.Tutor)
                 .WithMany(p => p.MadeOffers)
                 .HasForeignKey(p => p.TutorId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.ClientSetNull);
 
             builder.Entity<Offer>()
                 .HasOne(p => p.Subject)
                 .WithMany(p => p.Offers)
                 .HasForeignKey(p => p.SubjectId)
-                .OnDelete(DeleteBehavior.Restrict);  
+                .OnDelete(DeleteBehavior.Cascade);  
 
             builder.Entity<SubjectName>()
                 .HasOne(p => p.Subject)
                 .WithMany(p => p.SubCategories)
                 .HasForeignKey(p => p.SubjectId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
-            builder.Entity<Report>()
+            builder.Entity<ReportedOffer>()
                 .HasOne(p => p.ResourceCreator)
-                .WithMany(p => p.ReportsReceived)
+                .WithMany(p => p.ReportedOffersReceived)
                 .HasForeignKey(p => p.ResourceCreatorId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.ClientSetNull);
 
-            builder.Entity<Report>()
+            builder.Entity<ReportedOffer>()
                .HasOne(p => p.Reporter)
-               .WithMany(p => p.ReportsMade)
+               .WithMany(p => p.ReportedOffersMade)
                .HasForeignKey(p => p.ReporterId)
-               .OnDelete(DeleteBehavior.Restrict);
+               .OnDelete(DeleteBehavior.ClientSetNull);
+
+            builder.Entity<ReportedOffer>()
+                .HasOne(p => p.Offer)
+                .WithMany(p => p.Reports)
+                .HasForeignKey(p => p.OfferId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<ReportedComment>()
+              .HasOne(p => p.ResourceCreator)
+              .WithMany(p => p.ReportedCommentsReceived)
+              .HasForeignKey(p => p.ResourceCreatorId)
+              .OnDelete(DeleteBehavior.ClientSetNull);
+
+            builder.Entity<ReportedComment>()
+               .HasOne(p => p.Reporter)
+               .WithMany(p => p.ReportedCommentsMade)
+               .HasForeignKey(p => p.ReporterId)
+               .OnDelete(DeleteBehavior.ClientSetNull);
+
+            builder.Entity<ReportedComment>()
+                .HasOne(p => p.Comment)
+                .WithMany(p => p.Reports)
+                .HasForeignKey(p => p.CommentId)
+                .OnDelete(DeleteBehavior.Cascade);
 
 
             builder.Entity<Notification>()
                 .HasOne(p => p.NotificationRecipient)
                 .WithMany(p => p.Notifications)
                 .HasForeignKey(p => p.NotificationRecipientId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.ClientSetNull);
 
             builder.Entity<Log>()
                 .HasOne(p => p.User)
                 .WithMany(p => p.Logs)
                 .HasForeignKey(p => p.UserId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.ClientSetNull);
+
+        
 
 
 

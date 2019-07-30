@@ -1,15 +1,15 @@
 ﻿namespace FindMyTutor.Data.Models
 {
     using System;
+    using System.Collections.Generic;
 
     public class Comment : BaseModel<int>
     {
         public Comment()
         {
             this.PublicationDate = DateTime.Now;
+            this.Reports = new List<ReportedComment>();
         }
-
-        public override int Id { get; set; }
 
         public string CommenterId { get; set; }
 
@@ -25,5 +25,7 @@
 
         public DateTime PublicationDate { get; set; }
 
+        public ICollection<ReportedComment> Reports { get; set; }
+        public override int Id { get; set; }
     }
 }

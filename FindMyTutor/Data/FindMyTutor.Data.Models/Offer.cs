@@ -9,9 +9,8 @@ namespace FindMyTutor.Data.Models
         {
             this.Comments = new List<Comment>();
             this.Messages = new List<Message>();
+            this.Reports = new List<ReportedOffer>();
         }
-
-        public override int Id { get; set; }
 
         public SubjectName Subject { get; set; }
 
@@ -43,6 +42,8 @@ namespace FindMyTutor.Data.Models
 
         public string Description { get; set; }
 
+        public ICollection<ReportedOffer> Reports { get; set; }
 
+        public override int Id { get; set; }
     }
 }

@@ -244,11 +244,13 @@ namespace FindMyTutor.Data.Migrations
                     b.ToTable("Recommendations");
                 });
 
-            modelBuilder.Entity("FindMyTutor.Data.Models.Report", b =>
+            modelBuilder.Entity("FindMyTutor.Data.Models.ReportedComment", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CommentId");
 
                     b.Property<string>("Rationale");
 
@@ -256,17 +258,40 @@ namespace FindMyTutor.Data.Migrations
 
                     b.Property<string>("ResourceCreatorId");
 
-                    b.Property<int>("ResourceId");
-
-                    b.Property<int>("ResourceType");
-
                     b.HasKey("Id");
+
+                    b.HasIndex("CommentId");
 
                     b.HasIndex("ReporterId");
 
                     b.HasIndex("ResourceCreatorId");
 
-                    b.ToTable("Reports");
+                    b.ToTable("ReportedComment");
+                });
+
+            modelBuilder.Entity("FindMyTutor.Data.Models.ReportedOffer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("OfferId");
+
+                    b.Property<string>("Rationale");
+
+                    b.Property<string>("ReporterId");
+
+                    b.Property<string>("ResourceCreatorId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OfferId");
+
+                    b.HasIndex("ReporterId");
+
+                    b.HasIndex("ResourceCreatorId");
+
+                    b.ToTable("ReportedOffers");
                 });
 
             modelBuilder.Entity("FindMyTutor.Data.Models.Review", b =>
@@ -447,7 +472,7 @@ namespace FindMyTutor.Data.Migrations
                     b.HasOne("FindMyTutor.Data.Models.FindMyTutorUser", "Commenter")
                         .WithMany("Comments")
                         .HasForeignKey("CommenterId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("FindMyTutor.Data.Models.Offer", "Offer")
                         .WithMany("Comments")
@@ -459,8 +484,7 @@ namespace FindMyTutor.Data.Migrations
                 {
                     b.HasOne("FindMyTutor.Data.Models.FindMyTutorUser", "User")
                         .WithMany("Logs")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("FindMyTutor.Data.Models.Message", b =>
@@ -471,21 +495,18 @@ namespace FindMyTutor.Data.Migrations
 
                     b.HasOne("FindMyTutor.Data.Models.FindMyTutorUser", "Receiver")
                         .WithMany("ReveivedMessages")
-                        .HasForeignKey("ReceiverId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("ReceiverId");
 
                     b.HasOne("FindMyTutor.Data.Models.FindMyTutorUser", "Sender")
                         .WithMany("SentMessages")
-                        .HasForeignKey("SenderId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("SenderId");
                 });
 
             modelBuilder.Entity("FindMyTutor.Data.Models.Notification", b =>
                 {
                     b.HasOne("FindMyTutor.Data.Models.FindMyTutorUser", "NotificationRecipient")
                         .WithMany("Notifications")
-                        .HasForeignKey("NotificationRecipientId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("NotificationRecipientId");
                 });
 
             modelBuilder.Entity("FindMyTutor.Data.Models.Offer", b =>
@@ -493,56 +514,69 @@ namespace FindMyTutor.Data.Migrations
                     b.HasOne("FindMyTutor.Data.Models.SubjectName", "Subject")
                         .WithMany("Offers")
                         .HasForeignKey("SubjectId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("FindMyTutor.Data.Models.FindMyTutorUser", "Tutor")
                         .WithMany("MadeOffers")
-                        .HasForeignKey("TutorId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("TutorId");
                 });
 
             modelBuilder.Entity("FindMyTutor.Data.Models.Recommendation", b =>
                 {
                     b.HasOne("FindMyTutor.Data.Models.FindMyTutorUser", "RecommendTo")
                         .WithMany("RecommendationsByFriends")
-                        .HasForeignKey("RecommendToId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("RecommendToId");
 
                     b.HasOne("FindMyTutor.Data.Models.FindMyTutorUser", "Recommendee")
                         .WithMany("ReceivedRecommendations")
-                        .HasForeignKey("RecommendeeId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("RecommendeeId");
 
                     b.HasOne("FindMyTutor.Data.Models.FindMyTutorUser", "Recommender")
                         .WithMany("GivenRecommendations")
-                        .HasForeignKey("RecommenderId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("RecommenderId");
                 });
 
-            modelBuilder.Entity("FindMyTutor.Data.Models.Report", b =>
+            modelBuilder.Entity("FindMyTutor.Data.Models.ReportedComment", b =>
                 {
+                    b.HasOne("FindMyTutor.Data.Models.Comment", "Comment")
+                        .WithMany("Reports")
+                        .HasForeignKey("CommentId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("FindMyTutor.Data.Models.FindMyTutorUser", "Reporter")
-                        .WithMany("ReportsMade")
-                        .HasForeignKey("ReporterId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .WithMany("ReportedCommentsMade")
+                        .HasForeignKey("ReporterId");
 
                     b.HasOne("FindMyTutor.Data.Models.FindMyTutorUser", "ResourceCreator")
-                        .WithMany("ReportsReceived")
-                        .HasForeignKey("ResourceCreatorId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .WithMany("ReportedCommentsReceived")
+                        .HasForeignKey("ResourceCreatorId");
+                });
+
+            modelBuilder.Entity("FindMyTutor.Data.Models.ReportedOffer", b =>
+                {
+                    b.HasOne("FindMyTutor.Data.Models.Offer", "Offer")
+                        .WithMany("Reports")
+                        .HasForeignKey("OfferId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("FindMyTutor.Data.Models.FindMyTutorUser", "Reporter")
+                        .WithMany("ReportedOffersMade")
+                        .HasForeignKey("ReporterId");
+
+                    b.HasOne("FindMyTutor.Data.Models.FindMyTutorUser", "ResourceCreator")
+                        .WithMany("ReportedOffersReceived")
+                        .HasForeignKey("ResourceCreatorId");
                 });
 
             modelBuilder.Entity("FindMyTutor.Data.Models.Review", b =>
                 {
                     b.HasOne("FindMyTutor.Data.Models.FindMyTutorUser", "Reviewee")
                         .WithMany("ReceivedReviews")
-                        .HasForeignKey("RevieweeId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("RevieweeId");
 
                     b.HasOne("FindMyTutor.Data.Models.FindMyTutorUser", "Reviewer")
                         .WithMany("GivenReviews")
-                        .HasForeignKey("ReviewerId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("ReviewerId");
                 });
 
             modelBuilder.Entity("FindMyTutor.Data.Models.SubjectName", b =>
@@ -550,7 +584,7 @@ namespace FindMyTutor.Data.Migrations
                     b.HasOne("FindMyTutor.Data.Models.Subject", "Subject")
                         .WithMany("SubCategories")
                         .HasForeignKey("SubjectId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

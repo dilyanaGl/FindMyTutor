@@ -7,7 +7,7 @@
 
 @if (User.Identity.IsAuthenticated)
 {
-    await Html.PartialAsync("~/Views/Shared/_TempDataValidation.cshtml");
+    await Html.PartialAsync("~/Views/Shared/_TempDataValidation.cshtml", new { TempData = TempData});
 }
 
 
