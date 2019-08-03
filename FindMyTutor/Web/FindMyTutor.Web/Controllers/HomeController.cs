@@ -91,7 +91,7 @@ namespace FindMyTutor.Web.Controllers
         [HttpGet]
         public IEnumerable<SelectListItem> LoadSubjectNames(int subjectId, string levelName)
         {
-            return this.subjectService.LoadOfferBasedOnSubjectAndLevel(subjectId, levelName);
+            return this.subjectService.GetSubjectNames(subjectId, levelName);
 
         }
 

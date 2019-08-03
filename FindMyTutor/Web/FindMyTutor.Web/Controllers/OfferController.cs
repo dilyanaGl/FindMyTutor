@@ -180,7 +180,7 @@ namespace FindMyTutor.Web.Controllers
                 return this.RedirectToAction("Index", "Home");
             }
             var model = mapper.Map<Offer, EditOfferViewModel>(offer);
-            model.SubjectNames = this.subjectService.GetOthetSubjectNamesById(offer.SubjectId);
+            ////model.SubjectNames = this.subjectService.GetOthetSubjectNamesById(offer.SubjectId);
             return this.View(model);
         }
 

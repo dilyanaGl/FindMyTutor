@@ -7,10 +7,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.SenderName)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SenderId)
-            </th>
-            <th>
+             <th>
                 @Html.DisplayNameFor(model => model.MessagesCount)
             </th>
             <th>
@@ -25,17 +22,15 @@
             <td>
                 @Html.DisplayFor(modelItem => item.SenderName)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SenderId)
-            </td>
-            <td>
+             <td>
                 @Html.DisplayFor(modelItem => item.MessagesCount)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Topic)
             </td>
             <td>
-                @Html.ActionLink("Message", "Correspondence", new { id = item.SenderId })               
+                @Html.ActionLink("Пълна кореспонденция", "Message", "Correspondence", 
+               new { id = item.SenderId })               
             </td>
         </tr>
 }

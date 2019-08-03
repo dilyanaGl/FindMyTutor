@@ -16,6 +16,8 @@ namespace FindMyTutor.Web.ViewModels.Message
         [Display(Name = "От")]
         public string SenderName { get; set; }
 
+        public string RecipientId { get; set; }
+
         [Display(Name = "Съдържание")]
         public string Content { get; set; }
 

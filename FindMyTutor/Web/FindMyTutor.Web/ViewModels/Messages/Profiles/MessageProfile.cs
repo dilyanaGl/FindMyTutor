@@ -18,6 +18,9 @@ namespace FindMyTutor.Web.ViewModels.Messages.Profiles
 
             CreateMap<MailMessageDTO, SenderViewModel>();
 
+            CreateMap<RespondViewModel, MessageDTO>()
+                .ForMember(dest => dest.ReceiverId, opt => opt.MapFrom(src => src.RecipientId));
+
             
         }
     }

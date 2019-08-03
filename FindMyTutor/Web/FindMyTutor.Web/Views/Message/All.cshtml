@@ -6,26 +6,6 @@
 
 <h2 class="text-info">Съобщения</h2>
 
-<@*div>
-
-    <hr />
- 
-    @if (Model.UnreadMessages.Any())
-    {<dl class="dl-horizontal">
-            @{await Html.RenderPartialAsync("Partial/_Message.cshtml", Model.UnreadMessages);
-            }
-        </dl>
-    }
-    else
-    {
-        <p>Нямате получени съобщения</p>
-    }
-    <br />
-
-
-
-</div>*@
-
 @{ await Html.RenderPartialAsync("Partial/_Senders.cshtml", Model.Senders); }
 <div>
 

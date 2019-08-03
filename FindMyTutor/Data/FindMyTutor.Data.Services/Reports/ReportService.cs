@@ -13,17 +13,17 @@ namespace FindMyTutor.Data.Services.Reports
     {
         private readonly IRepository<ReportedComment> reportedComments;
         private readonly IRepository<ReportedOffer> reportedOffers;
-        private readonly IRepository<Comment> comments;
+        //private readonly IRepository<Comment> comments;
         private readonly IMapper mapper;
 
         public ReportService(IRepository<ReportedComment> reportedComments,
             IRepository<ReportedOffer> reportedOffers,
-            IRepository<Comment> comments,
+            //IRepository<Comment> comments,
             IMapper mapper)
         {
             this.reportedComments = reportedComments;
             this.reportedOffers = reportedOffers;
-            this.comments = comments;
+            //this.comments = comments;
             this.mapper = mapper;
         }
 

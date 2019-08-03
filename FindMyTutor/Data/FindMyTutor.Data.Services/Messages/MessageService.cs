@@ -24,28 +24,25 @@ namespace FindMyTutor.Data.Services.Messages
             
         }
 
-        public async Task<Message> GetMessage(int id)
+        public Message GetMessage(int id)
         {
            var message = this.messages.All().FirstOrDefault(p => p.Id == id);
-            message.IsRead = true;
-           
-            await this.messages.SaveChangesAsync();
-            return message;
+           return message;
         }
 
-        public IEnumerable<Message> GetSentMessages(string id)
-        {
-            return messages.All()
-               .Where(p => p.SenderId == id)
-               .ToArray();
-        }
+        //public IEnumerable<Message> GetSentMessages(string id)
+        //{
+        //    return messages.All()
+        //       .Where(p => p.SenderId == id)
+        //       .ToArray();
+        //}
 
-        public IEnumerable<Message> GetUnreadMessages(string id)
-        {
-            return this.messages.All()
-              .Where(p => p.ReceiverId == id && !p.IsRead)
-              .ToArray();
-        }
+        //public IEnumerable<Message> GetUnreadMessages(string id)
+        //{
+        //    return this.messages.All()
+        //      .Where(p => p.ReceiverId == id && !p.IsRead)
+        //      .ToArray();
+        //}
 
         public IEnumerable<Message> GetUserMessages(string id)
         {
@@ -54,13 +51,13 @@ namespace FindMyTutor.Data.Services.Messages
                 .ToArray();
         }
 
-        public IEnumerable<Message> GetReadMessages(string id)
-        {
-            return this.messages.All()
-                .Where(p => p.ReceiverId == id && p.IsRead)                
-                .ToArray();
+        //public IEnumerable<Message> GetReadMessages(string id)
+        //{
+        //    return this.messages.All()
+        //        .Where(p => p.ReceiverId == id && p.IsRead)                
+        //        .ToArray();
                 
-        }
+        //}
 
         public async Task<int> SendMessage(MessageDTO messageDTO)
         {
@@ -71,15 +68,7 @@ namespace FindMyTutor.Data.Services.Messages
             return message.Id;
         }
 
-        public  async Task<int> SetMessageToRead(int id)
-        {
-            var message = this.messages.All()
-                .FirstOrDefault(p => p.Id == id);
-
-            message.IsRead = true;
-
-            return await this.messages.SaveChangesAsync();
-        }
+   
 
         public IEnumerable<Message> GetFullCorrespondence(string senderId, string receiverId)
         {

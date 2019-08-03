@@ -33,17 +33,17 @@ namespace FindMyTutor.Data.Services.Subjects
             return new HashSet<SelectListItem>(subjectNames, new LevelsComparer());
         }
 
-        public IEnumerable<SelectListItem> GetOthetSubjectNamesById(int subjectNameId)
-        {
-            var subjectName = this.subjectNames.All().First(p => p.Id == subjectNameId);
-            return this.subjects.All().FirstOrDefault(p => p.Id == subjectName.SubjectId)
-                .SubCategories.Select(p => new SelectListItem
-                {
-                    Text = p.Name,
-                    Value = p.Id.ToString()
-                })
-                .ToArray();
-        }
+        //public IEnumerable<SelectListItem> GetOthetSubjectNamesById(int subjectNameId)
+        //{
+        //    var subjectName = this.subjectNames.All().First(p => p.Id == subjectNameId);
+        //    return this.subjects.All().FirstOrDefault(p => p.Id == subjectName.SubjectId)
+        //        .SubCategories.Select(p => new SelectListItem
+        //        {
+        //            Text = p.Name,
+        //            Value = p.Id.ToString()
+        //        })
+        //        .ToArray();
+        //}
 
         public string GetSubjectById(int id)
         {
@@ -74,19 +74,19 @@ namespace FindMyTutor.Data.Services.Subjects
                 .ToArray();
         }
 
-        public IEnumerable<SelectListItem> LoadOfferBasedOnSubjectAndLevel(int subjectId, string level)
-        {
-            var subjectNames = this.subjectNames.All()
-                .Where(p => p.SubjectId == subjectId && p.LevelEnglish== level)
-                .Select(p => new SelectListItem
-                {
-                    Text = p.Name,
-                    Value = p.Id.ToString()
-                })
-                .ToArray();
+        //public IEnumerable<SelectListItem> LoadOfferBasedOnSubjectAndLevel(int subjectId, string level)
+        //{
+        //    var subjectNames = this.subjectNames.All()
+        //        .Where(p => p.SubjectId == subjectId && p.LevelEnglish == level)
+        //        .Select(p => new SelectListItem
+        //        {
+        //            Text = p.Name,
+        //            Value = p.Id.ToString()
+        //        })
+        //        .ToArray();
 
-            return subjectNames;
-        }
+        //    return subjectNames;
+        //}
 
 
     }

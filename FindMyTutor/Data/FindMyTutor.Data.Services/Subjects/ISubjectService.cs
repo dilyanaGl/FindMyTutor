@@ -18,9 +18,9 @@ namespace FindMyTutor.Data.Services.Subjects
         
         string GetSubjectById(int id);
 
-        IEnumerable<SelectListItem> GetOthetSubjectNamesById(int subjectNameId);
+        //IEnumerable<SelectListItem> GetOthetSubjectNamesById(int subjectNameId);
 
-        IEnumerable<SelectListItem> LoadOfferBasedOnSubjectAndLevel(int subjectId, string level);
+        //IEnumerable<SelectListItem> LoadOfferBasedOnSubjectAndLevel(int subjectId, string level);
 
 
     }

@@ -4,12 +4,18 @@
     ViewData["Title"] = "Correspondence";
 }
 
+
+@{await Html.PartialAsync("~/Views/Shared/_TempDataValidation.cshtml", this.TempData); }
+
 <h2>Чат с @Model.Interlocutor</h2>
 
 <div>
-@{ await Html.RenderPartialAsync("Partial/_Message.cshtml", Model.Messages);}
+    @{ await Html.RenderPartialAsync("Partial/_Message.cshtml", Model.Messages);}
+
+
 </div>
+
 <div>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    <a asp-action="Index">Back to List</a>
+    @{ await Html.RenderPartialAsync("Partial/_Respond.cshtml", Model.Respond);}
 </div>
+

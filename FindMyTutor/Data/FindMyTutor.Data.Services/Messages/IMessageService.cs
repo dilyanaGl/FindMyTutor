@@ -15,15 +15,13 @@ namespace FindMyTutor.Data.Services.Messages
 
         Task<int> SendMessage(MessageDTO messageDTO);
 
-        Task<Message> GetMessage(int id);
+        Message GetMessage(int id);
 
-        IEnumerable<Message> GetSentMessages(string id);
+        //IEnumerable<Message> GetSentMessages(string id);
 
-        IEnumerable<Message> GetUnreadMessages(string id);
+        //IEnumerable<Message> GetUnreadMessages(string id);
 
-        IEnumerable<Message> GetReadMessages(string id);
-
-        Task<int> SetMessageToRead(int id);
+        //IEnumerable<Message> GetReadMessages(string id);      
 
         IEnumerable<Message> GetFullCorrespondence(string senderId, string receiverId);
 

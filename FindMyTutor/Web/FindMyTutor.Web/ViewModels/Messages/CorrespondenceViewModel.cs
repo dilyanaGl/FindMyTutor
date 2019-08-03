@@ -12,5 +12,7 @@ namespace FindMyTutor.Web.ViewModels.Messages
         public string Interlocutor { get; set; }
 
         public ICollection<MessageViewModel> Messages { get; set; }
+
+        public RespondViewModel Respond { get; set; }
     }
 }

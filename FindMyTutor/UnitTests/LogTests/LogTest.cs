@@ -16,7 +16,7 @@ namespace UnitTests.LogTests
     public class LogTest
     {
         [Fact]
-        public async Task Test_GetAllLogs_ShouldReturnCorrectResult()
+        public void Test_GetAllLogs_ShouldReturnCorrectResult()
         {
             var logs = new Log[]
             {
@@ -92,6 +92,8 @@ namespace UnitTests.LogTests
             return context;
 
         }
+
+
 
         //IEnumerable<Log> GetAllLogs();
 

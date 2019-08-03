@@ -115,11 +115,12 @@ namespace FindMyTutor.Web.Controllers
 
             string userId = this.userManager.GetUserId(HttpContext.User);
             var allSenders = this.messageService.GetMail(userId)
-                .Select(async p => {
+                .Select(async p =>
+                {
 
                     var mapping = mapper.Map<MailMessageDTO, SenderViewModel>(p);
                     var sender = await this.userManager.FindByIdAsync(mapping.SenderId);
-                    mapping.SenderName = sender.FullName;
+                    mapping.SenderName = sender.UserName;
                     return mapping;
                 })
                 .Select(p => p.Result)
@@ -135,7 +136,7 @@ namespace FindMyTutor.Web.Controllers
 
 
         [HttpGet]
-      //  [Authorize(Policy = Constants.Policy.MessageRequirement)]
+        //  [Authorize(Policy = Constants.Policy.MessageRequirement)]
         public async Task<IActionResult> Correspondence(string id)
         {
             try
@@ -147,7 +148,8 @@ namespace FindMyTutor.Web.Controllers
                     .Select(p =>
                     {
                         var model = mapper.Map<Message, MessageViewModel>(p);
-                        if(p.ReceiverId == currentUserId)
+                       
+                        if (p.ReceiverId == currentUserId)
                         {
                             model.IsReceived = true;
                         }
@@ -155,15 +157,22 @@ namespace FindMyTutor.Web.Controllers
                     })
                     .ToArray();
                 string interlocutor = (await this.userManager.FindByIdAsync(id)).UserName;
+
+                var respondModel = new RespondViewModel
+                {
+                    RecipientId = id
+                }; 
+
                 var viewModel = new CorrespondenceViewModel
                 {
                     Interlocutor = interlocutor,
-                    Messages = messages
+                    Messages = messages,
+                    Respond = respondModel
                 };
-              
+
                 return this.View(viewModel);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 string message = ex.Message;
                 this.TempData["Error"] = Constants.Message.InvalidOffer;
@@ -171,6 +180,31 @@ namespace FindMyTutor.Web.Controllers
             }
 
 
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Respond(string id, RespondViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var message = mapper.Map<RespondViewModel, MessageDTO>(model);
+                message.SendDate = DateTime.Now;
+                message.ReceiverId = id;
+                message.SenderId = this.userManager.GetUserId(HttpContext.User);
+                try
+                {
+                    var result = await this.messageService.SendMessage(message);
+                }
+                catch(Exception ex)
+                {
+                    this.TempData[Constants.ValidationState.Error] = ex.Message;
+                }
+                return this.RedirectToAction("Correspondence", new { id });
+            }
+            else
+            {
+                return this.RedirectToAction("Correspondence", new { id });
+            }
         }
 
 
@@ -193,6 +227,6 @@ namespace FindMyTutor.Web.Controllers
             return model;
         }
 
-        
+
     }
 }

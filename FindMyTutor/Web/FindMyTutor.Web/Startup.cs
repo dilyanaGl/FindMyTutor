@@ -40,6 +40,7 @@ using FindMyTutor.Web.ViewModels.Notifications.Profiles;
 using FindMyTutor.Data.Services.Notifications;
 using FindMyTutor.Web.ViewModels.Users.Profiles;
 
+
 namespace FindMyTutor.Web
 {
     public class Startup
@@ -63,7 +64,7 @@ namespace FindMyTutor.Web
 
             services.AddDbContext<FindMyTutorWebContext>(options =>
                     options.UseSqlServer(
-                        this.Configuration.GetConnectionString("DefaultConnection")));
+                        this.Configuration.GetConnectionString("DefaultConnection")));           
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
@@ -167,6 +168,9 @@ namespace FindMyTutor.Web
             app.UseCookiePolicy();
 
             app.UseAuthentication();
+
+                  
+            
 
             app.UseMvc(routes =>
             {

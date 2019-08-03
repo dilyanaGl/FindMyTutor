@@ -133,8 +133,9 @@ namespace UnitTests.CommentTests
             
             var commentService = new CommentService(commentRepo, mapper);
             int result = await commentService.AddComment(comment);
-            Assert.Equal(5, context.Offers.CountAsync().Result);
-            Assert.Contains("NewlyAdded", context.Offers.Select(p => p.Title).ToArray());
+            await context.SaveChangesAsync();
+            Assert.Equal(5, context.Comments.CountAsync().Result);
+            Assert.Contains("NewlyAdded", context.Comments.Select(p => p.Content).ToArray());
         }
 
         private async Task<FindMyTutorWebContext> GetContext()
